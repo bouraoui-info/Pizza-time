@@ -11,8 +11,15 @@ import { useSnapshot } from 'valtio';
 
 const Header = ({ number }: any) => {
     const { isDropdownOpen } = useSnapshot(store)
+    const [totalArticles, setTotalArticles] = React.useState(() => {
+        if (typeof localStorage !== 'undefined') {
+            return localStorage.getItem("totalArticles");
+        } else {
+            // Handle the case when localStorage is not available
+            return null; // Or provide a default value
+        }
+    });
 
-    const [totalArticles, setTotalArticles] = React.useState(localStorage.getItem("totalArticles"));
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
