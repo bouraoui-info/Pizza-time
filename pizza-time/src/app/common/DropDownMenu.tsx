@@ -24,7 +24,6 @@ function DropDownMenu() {
 
 
   const user = localStorage.getItem('user');
-console.log({user});
 const handleLoginClick = async () => {
   try {
     // debugger;
@@ -60,7 +59,6 @@ const handleLoginClick = async () => {
     // Envoyer la requête POST à l'URL /api/login
     const response = await fetch('http://localhost:3001/api/users', requestOptions);
     const result = await response.json();
-console.log({result});
 let user=result.filter((el:any)=>el.email===email && el.password===password);
     // Traiter la réponse de la requête
     if (user.length!==0) {

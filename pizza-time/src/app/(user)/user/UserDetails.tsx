@@ -11,7 +11,6 @@ type Props = {
 
 export default function UserDetails ({ user }: Props)  {
   const [userData, setUserData] = useState<any>("");
-console.log(userData); 
   useEffect(() => {
     // Function to fetch user data based on user's email
     const fetchUser = async () => {
