@@ -4,13 +4,14 @@ import UserEditAccountModal from "../user/UserEditAccountModal";
 import { getRepository } from 'typeorm';
 import 'reflect-metadata';
 
+
 type Props = {
-  user: any;
+  user: any; 
 };
 
-const UserDetails = ({ user }: Props) => {
-  const [userData, setUserData] = useState<user | null>(null);
-
+export default function UserDetails ({ user }: Props)  {
+  const [userData, setUserData] = useState<any>("");
+console.log(userData); 
   useEffect(() => {
     // Function to fetch user data based on user's email
     const fetchUser = async () => {
@@ -18,7 +19,7 @@ const UserDetails = ({ user }: Props) => {
 
       try {
         // Fetch user data using TypeORM query
-        const fetchedUser = await userRepository.findOne({ where: { email: user.email } });
+        const fetchedUser :any = await userRepository.findOne({ where: { email: user.email } });
 
         if (fetchedUser) {
           setUserData(fetchedUser);
@@ -26,6 +27,7 @@ const UserDetails = ({ user }: Props) => {
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
+      
     };
 
     fetchUser(); // Fetch user data when component mounts
@@ -65,4 +67,4 @@ const UserDetails = ({ user }: Props) => {
   );
 };
 
-export default UserDetails;
+ 
