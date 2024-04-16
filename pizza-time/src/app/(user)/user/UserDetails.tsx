@@ -39,7 +39,7 @@ export default function UserDetails ({ user }: Props)  {
           {user.image ? (
             <Image
               src={user.image}
-              alt="pro-img"
+              alt="user-img"
               width={100}
               height={100}
               className="mx-auto rounded-full"

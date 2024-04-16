@@ -3,8 +3,8 @@ import { HiPencil } from "react-icons/hi";
 import Modal from 'react-modal';
 
 type Props = {
-  user: any;
-  updateUserProfile: (phone: string) => void;
+    user: any;
+    updateUserProfile: (phone: string) => void;
 };
 
 const UserEditAccountModal = ({ user, updateUserProfile }: Props) => {
