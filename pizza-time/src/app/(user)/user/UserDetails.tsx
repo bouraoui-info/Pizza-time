@@ -1,25 +1,23 @@
+import { useState } from 'react';
+import Image from 'next/image';
+import UserEditAccountModal from '../user/UserEditAccountModal';
 
-"use client"
-import { useState, useEffect } from 'react';
-import Image from "next/image";
-import UserEditAccountModal from "../user/UserEditAccountModal";
-type Props = {
+type UserDetailsProps = {
   user: any;
+  updateUserProfile: (formData: FormData) => void;
 };
 
-export default function UserDetails({ user }: Props) {
-  // const [userData, setUserData] = useState<any>(user??{});
+export default function UserDetails({ user, updateUserProfile }: UserDetailsProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userData");
-    localStorage.removeItem("user");
-
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('user');
   };
-
-
-  function updateUserProfile(formData: FormData): void {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <div className="w-full rounded-lg shadow-xl max-w-md py-4">
@@ -39,7 +37,6 @@ export default function UserDetails({ user }: Props) {
                 className="mx-auto rounded-full"
               />
             ) : (
-              // Render a default image if user's image is not available
               <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center">
                 <span className="text-gray-500 text-xl">No Image</span>
               </div>
@@ -50,14 +47,25 @@ export default function UserDetails({ user }: Props) {
                 {user.email}
               </h1>
               <div className="flex flex-col items-center justify-center">
-              <UserEditAccountModal user={user} updateUserProfile={updateUserProfile} />
-              <button
-                className="text-white inline-flex  bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 "
-                onClick={logout}
-              >
-                Logout
-              </button>
-            </div>
+                <button
+                  className="text-white inline bg-green-600 hover:bg-green-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-4"
+                  onClick={openModal}
+                >
+                  Edit Profile
+                </button>
+              {isModalOpen?<UserEditAccountModal
+                  user={user}
+                  updateUserProfile={updateUserProfile}
+                  isOpen={isModalOpen}
+                  setIsOpen={closeModal}
+                />:null}  
+                <button
+                  className="text-white inline-flex bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           </>
         )}
