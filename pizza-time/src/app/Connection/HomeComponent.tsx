@@ -13,7 +13,6 @@ const getdata=()=>{
 React.useEffect(() => {
   getdata()
 }, [])
-console.log({dataq});
 
   return (
     <div>Home</div>

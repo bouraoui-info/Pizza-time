@@ -147,10 +147,9 @@ let user=result.filter((el:any)=>el.email===email && el.password===password);
         // Render user details and edit modal if user is authenticated
         <>
           <UserDetails user={JSON.parse(user)} />
-          <UserEditAccountModal user={JSON.parse(user)}  
-          updateUserProfile={function (phone: string): void {
+          <UserEditAccountModal user={JSON.parse(user)} updateUserProfile={function (formData: FormData): void {
             throw new Error('Function not implemented.');
-          }} />
+          } }          />
         </>
       )}
       {error && (
