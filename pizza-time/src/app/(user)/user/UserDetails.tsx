@@ -1,5 +1,5 @@
 
-"use client" 
+"use client"
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import UserEditAccountModal from "../user/UserEditAccountModal";
@@ -17,30 +17,7 @@ export default function UserDetails({ user }: Props) {
     localStorage.removeItem("user");
 
   };
-  // console.log({userData});
-  
-//  const fetchUser = async () => {
-//   console.log({user})
-//   setUserData(user);
 
-//       // try {
-//       //   // Fetch user data using TypeORM query
-//       //   const fetchedUser: any = await userRepository.findOne({ where: { email: user.email } });
-//       //   console.log("Fetched User:", fetchedUser);
-
-//       //   if (fetchedUser) {
-//       //     setUserData(user);
-//       //   }
-//       // } catch (error) {
-//       //   console.error('Error fetching user data:', error);
-//       // }
-//     };
-//   useEffect(() => {
-//     fetchUser();
-//     console.log({userData});
-//      // Fetch user data when component mounts
-//   }, []);
-console.log({user});
 
   function updateUserProfile(formData: FormData): void {
     throw new Error('Function not implemented.');
@@ -74,14 +51,15 @@ console.log({user});
               <h1 className="text-xl text-center my-5 font-semibold leading-tight tracking-tight text-gray-500 md:text-2xl">
                 {user.email}
               </h1>
-              <p className="text-gray-500 mb-4">{user.email}</p>
+              <div className="flex flex-col items-center justify-center">
               <UserEditAccountModal user={user} updateUserProfile={updateUserProfile} />
               <button
-                className="text-white inline-flex items-center bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                className="text-white inline-flex  bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 "
                 onClick={logout}
               >
                 Logout
               </button>
+            </div>
             </div>
           </>
         )}
