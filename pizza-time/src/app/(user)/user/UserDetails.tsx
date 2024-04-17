@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import UserEditAccountModal from "../user/UserEditAccountModal";
-import { getRepository } from 'typeorm';
-
 type Props = {
   user: any;
 };

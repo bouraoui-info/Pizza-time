@@ -11,6 +11,7 @@ export default function UserEditAccountModal({ user, updateUserProfile }: Props)
     const [isOpen, setIsOpen] = useState(false);
     const [email, setEmail] = useState(user.email || "");
     const [name, setName] = useState(user.name || "");
+    const [lastname, setLastname] = useState(user.lastname || "");
     const [phone, setPhone] = useState(user.phone || "");
     const [address, setAddress] = useState(user.address || "");
     const [image, setImage] = useState<File | null>(null);
@@ -22,23 +23,25 @@ export default function UserEditAccountModal({ user, updateUserProfile }: Props)
     const editUserProfile = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("name", name);
-        formData.append("email", email);
-        formData.append("phone", phone);
-        formData.append("address", address);
+        formData.set("name", name);
+        formData.set("lastname", lastname);
+        formData.set("email", email);
+        formData.set("phone", phone);
+        formData.set("address", address);
         if (image) {
-            formData.append("image", image);
+            formData.set("image", image);
         }
         updateUserProfile(formData);
-        closeModal();
     };
 
-    
 
     useEffect(() => {
         if (user) {
             setName(user.name);
             setEmail(user.email);
+            setLastname(user.lastname);
+            setPhone(user.phone);
+            setAddress(user.address);
         }
     }, [user]);
 
@@ -136,11 +139,10 @@ export default function UserEditAccountModal({ user, updateUserProfile }: Props)
                                 />
                             </div>
                         </div>
-                        <button
-                            className="text-white inline-flex items-center bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                            disabled={!name || !email}>
-                            Save Changes
-                        </button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
                     </form>
                 </div>
             </Modal>
