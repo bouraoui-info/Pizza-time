@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import UserEditAccountModal from '../user/UserEditAccountModal';
+import { setIsDropdownOpen, store } from '../../../../src/app/store';
+import { useSnapshot } from 'valtio';
+
 
 type UserDetailsProps = {
   user: any;
@@ -9,7 +12,7 @@ type UserDetailsProps = {
 
 export default function UserDetails({ user, updateUserProfile }: UserDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { isDropdownOpen } = useSnapshot(store)
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -18,6 +21,9 @@ export default function UserDetails({ user, updateUserProfile }: UserDetailsProp
     localStorage.removeItem('userData');
     localStorage.removeItem('user');
   };
+  const handleClose=()=>{
+    setIsDropdownOpen(!isDropdownOpen);
+  }
 
   return (
     <div className="w-full rounded-lg shadow-xl max-w-md py-4">
@@ -53,17 +59,23 @@ export default function UserDetails({ user, updateUserProfile }: UserDetailsProp
                 >
                   Edit Profile
                 </button>
-              {isModalOpen?<UserEditAccountModal
+                {isModalOpen ? <UserEditAccountModal
                   user={user}
                   updateUserProfile={updateUserProfile}
                   isOpen={isModalOpen}
                   setIsOpen={closeModal}
-                />:null}  
+                /> : null}
                 <button
-                  className="text-white inline-flex bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5"
+                  className="text-white inline-flex bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-4"
                   onClick={logout}
                 >
                   Logout
+                </button>
+                <button
+                  className="text-white inline-flex bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5"
+                  onClick={handleClose}
+                >
+                  Close
                 </button>
               </div>
             </div>
