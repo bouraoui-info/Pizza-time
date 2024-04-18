@@ -1,10 +1,9 @@
+// Map.tsx
 "use client";
-
 import {
   GoogleMap,
   InfoWindowF,
   LoadScript,
-  Marker,
   MarkerF,
 } from "@react-google-maps/api";
 import useLocation from "@/app/hooks/useLocation";
@@ -32,31 +31,27 @@ type place =
       etat: string;
     }
   | undefined;
+
 type CustomSize = {
   width: number;
   height: number;
   equals: (other: CustomSize) => boolean;
 };
+
 const Map = () => {
   const ContainerStyle = {
     width: "100%",
     height: "70vh",
   };
   const cordinate = { lat: 44.62072, lng: 4.39088 };
-  const { userLocation, setUserlocation } = useLocation();
-  console.log("locationx", userLocation);
+  const { userLocation } = useLocation();
 
   const customPinView: any = new L.Icon({
-    icon: FaMapMarkerAlt, // Specify the path to your icon image
+    icon: FaMapMarkerAlt,
     iconSize: [50, 50],
-    // Set the size of the icon
   });
 
-  const postalCodes: string[] = Object.values(card.shoplist).map(
-    (item: any) => item.PostalCode
-  );
-  console.log(postalCodes);
-  0;
+  const postalCodes: string[] = Object.values(card.shoplist).map((item: any) => item.PostalCode);
   const pixelOffset: CustomSize = {
     width: 0,
     height: 0,
@@ -66,31 +61,23 @@ const Map = () => {
   };
 
   const [selectedPlace, setSelectedPlace] = useState<place>();
-  console.log({ selectedPlace });
   const router = useRouter();
 
   return (
     <>
-      {/* <Button small label="click" onClick={()=>{router.push(`/api/${postalCode}`)}}/> */}
       <div className="m-2">
         <div className="m-2">
           <SearchInput />
         </div>
         <LoadScript googleMapsApiKey="AIzaSyDEhl-uIJjF6FAC22WsVvQc_vor_HLPzhk">
-          <GoogleMap
-            mapContainerStyle={ContainerStyle}
-            center={cordinate}
-            zoom={4}
-          >
+          <GoogleMap mapContainerStyle={ContainerStyle} center={cordinate} zoom={4}>
             <MarkerF key="myLocation" position={userLocation} />
 
             {Object.values(card.shoplist).map((place: any) => (
               <MarkerF
                 key={`${place.Address}-${place.Company}-${place.latitude}-${place.longitude}`}
                 onClick={() => {
-                  place === selectedPlace
-                    ? setSelectedPlace(undefined)
-                    : setSelectedPlace(place);
+                  place === selectedPlace ? setSelectedPlace(undefined) : setSelectedPlace(place);
                 }}
                 icon={customPinView}
                 position={{ lat: place.latitude, lng: place.longitude }}
