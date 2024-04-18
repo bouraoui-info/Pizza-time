@@ -67,7 +67,10 @@ export default function UserDetails({ user, updateUserProfile }: UserDetailsProp
                 /> : null}
                 <button
                   className="text-white inline-flex bg-red-600 hover:bg-red-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-4"
-                  onClick={logout}
+                  onClick={()=>{
+                    logout();
+                    handleClose();
+                  }}
                 >
                   Logout
                 </button>
