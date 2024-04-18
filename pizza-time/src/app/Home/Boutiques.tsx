@@ -16,12 +16,13 @@ const Boutiques = () => {
   };
 
   return (
-    <div className='max-w-2xl mx-auto my-5'>
-      <h2 className='text-3xl font-semibold text-center text-gray-600 sm:text-4xl'>Nos Boutiques</h2>
-      <div className="grid sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
-        {Object.values(card.shoplist).map((shoplist:any) => {
+    <div  className='text-3xl font-semibold text-center text-gray-600 sm:text-4xl'>Nos Boutiques
+      <div className="container text-center">
+        <div className="row">
+        {Object.values(card.shoplist).map((shoplist:any,index) => {
           const isOpen = isBoutiqueOpen(shoplist.openingTime, shoplist.closingTime);
           return (
+            <div className="col" key={index}>
             <Link href={`/boutiques/${shoplist.shopid}`} key={shoplist.id}>
               <div className={`bg-white rounded-lg shadow-md overflow-hidden cursor-pointer ${isOpen ? 'border-green-500' : 'border-red-500'}`}>
                 <img src={shoplist.image} alt={shoplist.title} className="w-full h-48 object-cover" />
@@ -36,8 +37,10 @@ const Boutiques = () => {
                 </div>
               </div>
             </Link>
+            </div>
           );
         })}
+        </div>
       </div>
     </div>
   );
