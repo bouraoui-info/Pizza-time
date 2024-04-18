@@ -1,7 +1,7 @@
 "use client"
 import { HiBars3, HiOutlineShoppingCart } from "react-icons/hi2";
 import Link from 'next/link';
-import Location from '../Maps/Location';
+import Location from '../Maps/page';
 import dynamic from 'next/dynamic';
 import { setIsDropdownOpen, store } from '../store';
 import { useSnapshot } from 'valtio';

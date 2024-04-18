@@ -11,7 +11,7 @@ import { setTime, setpanier, store, usecartStore } from '../store';
 import { useSnapshot } from 'valtio';
 import moto from '../../../public/Objects/moto.png';
 import panierrepas from '../../../public/Objects/panierrepas.png';
-import Location from '../../app/Maps/Location';
+import Location from '../Maps/page';
 
 type ModalProps = {
   isOpenModal: boolean;
