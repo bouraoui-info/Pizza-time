@@ -11,7 +11,7 @@ import { setTime, setpanier, store, usecartStore } from '../store';
 import { useSnapshot } from 'valtio';
 import moto from '../../../public/Objects/moto.png';
 import panierrepas from '../../../public/Objects/panierrepas.png';
-import Location from '../Maps/page';
+import { UserLocationProvider } from '../hooks/useLocation';
 
 type ModalProps = {
   isOpenModal: boolean;
@@ -120,7 +120,7 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, tit
             <div className='mb-5'>
               {showlocation ? (
                 <div style={{ position: "fixed", right: "10%" }}>
-                  <Location />
+                  <UserLocationProvider />
                 </div>
               ) : null}
             </div>

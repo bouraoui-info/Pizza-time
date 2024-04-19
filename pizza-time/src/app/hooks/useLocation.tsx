@@ -1,4 +1,3 @@
-// useLocation.tsx
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -13,7 +12,9 @@ type Location = {
 };
 
 export const UserLocationContext = createContext<Location | null>(null);
-
+interface Props{
+  [propsName:string]:any
+}
 export const UserLocationProvider = (props: any) => {
   const [userLocation, setUserlocation] = useState<{ lat: number; lng: number }[]>([]);
   const [query, setQuery] = useState("");

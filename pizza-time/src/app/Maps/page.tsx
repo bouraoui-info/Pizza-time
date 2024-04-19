@@ -1,4 +1,4 @@
-// Map.tsx
+
 "use client";
 import {
   GoogleMap,
@@ -13,23 +13,25 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { card } from "../../constats";
-import SearchInput from "../common/SearchInput";
+import { setId } from "../store"
+import Container from "../common/Container";
+import {MenuData} from "../../Data/menu-data"; 
 
 type place =
   | {
-      town: string;
-      image: string;
-      Nature: string;
-      shopid: number;
-      Address: string;
-      Company: string;
-      Country: string;
-      PostalCode: string;
-      latitude: number;
-      longitude: number;
-      Responsible: string;
-      etat: string;
-    }
+    town: string;
+    image: string;
+    Nature: string;
+    shopid: number;
+    Address: string;
+    Company: string;
+    Country: string;
+    PostalCode: string;
+    latitude: number;
+    longitude: number;
+    Responsible: string;
+    etat: string;
+  }
   | undefined;
 
 type CustomSize = {
@@ -39,6 +41,29 @@ type CustomSize = {
 };
 
 const Map = () => {
+  const navigateToOtherPage = (id: number) => {
+    setId(id);
+    localStorage.setItem("shopid", id.toString());
+    var jsonString = JSON.stringify(card[id]);
+
+    // Sample Json data 
+
+    var jsonData = {
+      workflow: card[id].workflow,
+      categories: card[id].categories,
+      items: card[id].items,
+      place: card[id].place
+    };
+
+    // Convert JSON Data to string
+
+    var jsonString = JSON.stringify(jsonData);
+
+    // Save JSON String to local storage
+
+    localStorage.setItem("card", jsonString);
+    router.push("common/boutique");
+  };
   const ContainerStyle = {
     width: "100%",
     height: "70vh",
@@ -64,14 +89,19 @@ const Map = () => {
   const router = useRouter();
 
   return (
-    <>
+    <Container>
       <div className="m-2">
-        <div className="m-2">
-          <SearchInput />
-        </div>
-        <LoadScript googleMapsApiKey="AIzaSyDEhl-uIJjF6FAC22WsVvQc_vor_HLPzhk">
-          <GoogleMap mapContainerStyle={ContainerStyle} center={cordinate} zoom={4}>
-            <MarkerF key="myLocation" position={userLocation} />
+        <LoadScript googleMapsApiKey="AIzaSyCew3EPYmeItz0-Rc9y4D31UCH7nlPFKzA">
+          <GoogleMap
+            mapContainerStyle={ContainerStyle}
+            center={cordinate}
+            zoom={4}
+          >
+            <MarkerF
+              key="myLocation"
+              icon={customPinView}
+              position={userLocation}
+               />
 
             {Object.values(card.shoplist).map((place: any) => (
               <MarkerF
@@ -105,7 +135,18 @@ const Map = () => {
                       src={selectedPlace.image}
                       alt=""
                       onClick={() => {
-                        router.push(`/components/Boutiques`);
+                        let id=""; 
+                        for (let item of Object.keys(MenuData)){
+                          if (
+                            JSON.stringify(MenuData as any) ===
+                            JSON.stringify(selectedPlace)
+                          ){
+                            id = item;
+                          }
+                        }
+
+                        router.push(`/common/boutique`);
+                        
                       }}
                     />
                   </div>
@@ -122,7 +163,7 @@ const Map = () => {
           </GoogleMap>
         </LoadScript>
       </div>
-    </>
+    </Container>
   );
 };
 

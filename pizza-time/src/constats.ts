@@ -1,4 +1,4 @@
-export const card =
+export const card:any=
 {
     "etat": "En attente",
     "tags": {

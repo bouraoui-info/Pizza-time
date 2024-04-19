@@ -7,6 +7,7 @@ type StoreType = {
     panier:any
     time: number;
     isDropdownOpen: boolean;
+    id: number; 
 };
 
 export const store = proxy<StoreType>({
@@ -14,8 +15,12 @@ export const store = proxy<StoreType>({
     time: Date.now(),
     isDropdownOpen: false,
     totalPrice: 0,
-    panier:[]
+    panier:[],
+    id:0,
+
 });
+export function setId(id: number): void {
+    store.id = id;}
 
 export function setTime(time: any): void {
     store.time = time;

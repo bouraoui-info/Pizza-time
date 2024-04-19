@@ -1,11 +1,11 @@
 "use client"
 import { HiBars3, HiOutlineShoppingCart } from "react-icons/hi2";
 import Link from 'next/link';
-import Location from '../Maps/page';
 import dynamic from 'next/dynamic';
 import { setIsDropdownOpen, store } from '../store';
 import { useSnapshot } from 'valtio';
 import React from "react";
+import { UserLocationProvider } from "../hooks/useLocation";
 
 
 const Header = ({ number }: any) => {
@@ -42,7 +42,7 @@ const Header = ({ number }: any) => {
                     <div className="px-4 sm:px-6 lg:px-8 mt-2">
                         <div className=" py-4">
                             <h2 className="text-lg leading-6 my-4 font-medium text-gray-900">
-                                <Location />
+                                <UserLocationProvider />
                             </h2>
                         </div>
                     </div>
