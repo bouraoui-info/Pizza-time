@@ -14,9 +14,7 @@ React.useEffect(() => {
   getdata()
 }, [])
 
-  return (
-    <div>Home</div>
-  )
+  
 }
 
 export default HomeComponent
