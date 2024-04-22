@@ -18,6 +18,7 @@
     "headlessui": "^0.0.0",
     "moment": "^2.30.1",
     "next": "14.1.0",
+    "next-auth": "^4.24.7",
     "pg": "^8.11.3",
     "react": "^18",
     "react-bootstrap": "^2.10.1",
@@ -26,6 +27,7 @@
     "react-icons": "^5.0.1",
     "react-modal": "^3.16.1",
     "reactstrap": "^9.2.2",
+    "recharts": "^2.12.6",
     "typeorm": "^0.3.20",
     "valtio": "^1.13.1",
     "zustand": "^4.5.0"

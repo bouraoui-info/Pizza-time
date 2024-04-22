@@ -65,15 +65,20 @@ const Map = () => {
     router.push("common/boutique");
   };
   const ContainerStyle = {
-    width: "100%",
-    height: "70vh",
+    width: "50%",
+    height: "20vh",
+   
+
   };
   const cordinate = { lat: 44.62072, lng: 4.39088 };
   const { userLocation } = useLocation();
 
+  
+
   const customPinView: any = new L.Icon({
     icon: FaMapMarkerAlt,
     iconSize: [50, 50],
+
   });
 
   const postalCodes: string[] = Object.values(card.shoplist).map((item: any) => item.PostalCode);

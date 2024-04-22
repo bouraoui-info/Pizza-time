@@ -19,8 +19,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <UserLocationProvider>
-
-
           <main className="Container">{children} </main>
           <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
           <link href="./output.css" rel="stylesheet" />
@@ -32,7 +30,6 @@ export default function RootLayout({
           <br />
           <br />
           <br />
-
         </UserLocationProvider>
       </body>
     </html>
