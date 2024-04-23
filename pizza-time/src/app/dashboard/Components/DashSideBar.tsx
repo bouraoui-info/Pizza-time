@@ -1,10 +1,19 @@
 import { HiArrowRightOnRectangle, HiChevronDoubleLeft } from "react-icons/hi2";
 import RenderRoutes from "./RenderRoutes";
 import { AdminRoutes } from "./routes";
+import { useRouter } from "next/router";
 
 type Props = {
   show: boolean;
   showSideBar: () => void;
+};
+
+
+const Logout = () => {
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("userData");
+  localStorage.removeItem("user");
+
 };
 
 const DashSideBar = ({ show, showSideBar }: Props) => {
@@ -56,9 +65,9 @@ const DashSideBar = ({ show, showSideBar }: Props) => {
               <HiArrowRightOnRectangle
                 className="text-slate-500 mr-2"
                 size={24}
+                onClick={Logout}
               />
             </div>
-
             <span className={`hidden ${show && "md:inline"}`}>Logout</span>
           </div>
         </div>
