@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Modal from "react-modal";
 import UploadImg from "../Components/UploadImg";
 
-Modal.setAppElement("#__next");
+// Modal.setAppElement("#__next");
 
 const AdminAddCategory = () => {
     const router = useRouter();

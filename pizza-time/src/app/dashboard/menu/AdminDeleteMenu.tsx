@@ -1,34 +1,39 @@
 // AdminDeleteMenu.tsx
 import React, { useState } from 'react';
 
-const AdminDeleteMenu: React.FC = () => {
-  const [productId, setProductId] = useState('');
+interface AdminDeleteMenuProps {
+menuId: string;
+}
 
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`/api/deleteproduct/${productId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      // Optionally, you can handle success or refresh the product list
-      console.log('Product deleted successfully');
-    } catch (error) {
-      console.error('Error deleting product:', error);
-    }
-  };
+const AdminDeleteMenu: React.FC<AdminDeleteMenuProps> = ({ menuId }) => {
+const [productId, setProductId] = useState('');
 
-  return (
-    <div>
-      <h2>Delete Product</h2>
-      <label>
-        Product ID:
-        <input type="text" value={productId} onChange={(e) => setProductId(e.target.value)} />
-      </label>
-      <button onClick={handleDelete}>Delete Product</button>
-    </div>
-  );
+const handleDelete = async () => {
+try {
+const response = await fetch(`/api/deleteproduct/${productId}`, {
+method: 'DELETE',
+headers: {
+'Content-Type': 'application/json',
+},
+});
+// Optionally, you can handle success or refresh the product list
+console.log('Product deleted successfully');
+} catch (error) {
+console.error('Error deleting product:', error);
+}
+};
+
+return (
+<div>
+<h2>Delete Product</h2>
+<label>
+Product ID:
+<input type="text" value={productId} onChange={(e) => setProductId(e.target.value)} />
+</label>
+<button onClick={handleDelete}>Delete Product</button>
+</div>
+);
 };
 
 export default AdminDeleteMenu;
+

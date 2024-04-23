@@ -53,10 +53,8 @@ const AdminOrderTable = () => {
                 </thead>
                 {pageVariables.map((variables, i) => (
                     <AdminFetchedOrders
-                        key={"" + variables.after}
-                        variables={variables}
-                        isLastPage={i === pageVariables.length - 1}
-                        onLoadMore={(after: any) => setPageVariables([...pageVariables, { after, first: 4 }])}
+                        panier={[]}
+                        onLoadMore={() => setPageVariables([...pageVariables, { after:"3", first: 4 }])}
                     />
                 ))}
 

@@ -1,4 +1,3 @@
-// AdminFetchedMenus.tsx
 import React from 'react';
 import AdminAddMenu from './AdminAddMenu';
 import AdminEditMenu from './AdminEditMenu';
@@ -11,6 +10,7 @@ type Menu = {
     category: string;
     price: number;
     image: string;
+    imageUrl: string;
 };
 
 type MenuEdge = {
@@ -18,7 +18,7 @@ type MenuEdge = {
 };
 
 type AdminFetchedMenusProps = {
-    menus: MenuEdge[];
+    menus:any;
     isAdminLastPage: boolean;
     onLoadMore: (after: string) => void;
 };
@@ -29,7 +29,7 @@ const AdminFetchedMenus: React.FC<AdminFetchedMenusProps> = ({
     onLoadMore,
 }) => {
     const renderMenus = () => {
-        return menus.map((menuEdge) => {
+        return menus.map((menuEdge:any) => {
             const { id, title, category, price, image } = menuEdge.node;
             return (
                 <tr key={id}>
@@ -40,10 +40,10 @@ const AdminFetchedMenus: React.FC<AdminFetchedMenusProps> = ({
                         <Image src={image} width={50} height={50} alt="Menu Image" />
                     </td>
                     <td>
-                        <AdminEditMenu menu={menuEdge.node} />
+                        <AdminEditMenu menuProp={menuEdge.node} />
                     </td>
                     <td>
-                        <AdminDeleteMenu menuId={id} />
+                        <AdminDeleteMenu menuId={menuEdge.node.id} />
                     </td>
                 </tr>
             );
@@ -68,8 +68,7 @@ const AdminFetchedMenus: React.FC<AdminFetchedMenusProps> = ({
             </table>
             <AdminAddMenu />
             {isAdminLastPage && (
-                <button onClick={onLoadMore}>Load More</button>
-            )}
+                <button onClick={() => onLoadMore(menus[menus.length - 1].cursor)}>Load More</button>            )}
         </div>
     );
 };

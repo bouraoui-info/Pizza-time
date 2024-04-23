@@ -1,16 +1,26 @@
-// AdminEditMenu.tsx
 import React, { useState, useEffect } from 'react';
 
-const AdminEditMenu: React.FC = () => {
-  const [productId, setProductId] = useState('');
-  const [product, setProduct] = useState<any>({});
+type Menu = {
+  id: string;
+  title: string;
+  category: string;
+  price: number;
+  imageUrl: string;
+};
+
+type Props = {
+  menuProp: Menu;
+};
+
+const AdminEditMenu: React.FC<Props> = ({ menuProp }) => {
+  const [product, setProduct] = useState<Menu>(menuProp);
 
   useEffect(() => {
     // Fetch product details when productId changes
-    if (productId) {
-      fetchProduct(productId);
+    if (product.id) {
+      fetchProduct(product.id);
     }
-  }, [productId]);
+  }, [product.id]);
 
   const fetchProduct = async (id: string) => {
     try {
@@ -24,7 +34,7 @@ const AdminEditMenu: React.FC = () => {
 
   const handleEdit = async () => {
     try {
-      const response = await fetch(`/api/editproduct/${productId}`, {
+      const response = await fetch(`/api/editproduct/${product.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -43,12 +53,12 @@ const AdminEditMenu: React.FC = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  return (
+ return (
     <div>
       <h2>Edit Product</h2>
       <label>
         Product ID:
-        <input type="text" value={productId} onChange={(e) => setProductId(e.target.value)} />
+        <input type="text" value={product.id} onChange={(e) => setProduct({ ...product, id: e.target.value })} />
       </label>
       <br />
       <label>

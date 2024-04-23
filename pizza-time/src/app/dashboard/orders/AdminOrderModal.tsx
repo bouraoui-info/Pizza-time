@@ -4,10 +4,10 @@ import Image from "next/image";
 import Modal from "react-modal";
 
 type AdminOrderProps = {
-    order: any;
+    panier: any;
 };
 
-const AdminOrderModal = ({ order }: AdminOrderProps) => {
+const AdminOrderModal = ({ panier }: AdminOrderProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const openModal = () => setIsOpen(true);
@@ -22,14 +22,14 @@ const AdminOrderModal = ({ order }: AdminOrderProps) => {
                 onRequestClose={closeModal}
             >
                 <div className="mt-3 bg-slate-50 p-2 rounded-md ">
-                    <p>{order.userName}</p>
-                    <p>{order.userEmail}</p>
-                    <p>{order.userPhone} </p>
-                    <p>{order.deliveryAddress} </p>
+                    <p>{panier.userName}</p>
+                    <p>{panier.userEmail}</p>
+                    <p>{panier.userPhone} </p>
+                    <p>{panier.deliveryAddress} </p>
                 </div>
 
                 <div className="mt-4">
-                    {order.cart.map((cart: any) => (
+                    {panier.cart.map((cart: any) => (
                         <div className="flex items-center space-y-3 " key={cart?.id}>
                             <div className="w-16 h-16 overflow-hidden  rounded-full">
                                 <Image
@@ -65,29 +65,29 @@ const AdminOrderModal = ({ order }: AdminOrderProps) => {
 
                     <div className="flex items-center justify-between p-2 mt-3 text-gray-500 border-t">
                         <span>Discount</span>
-                        <span>$-{order.discount}</span>
+                        <span>$-{panier.discount}</span>
                     </div>
                     <div className="flex items-center justify-between p-2 text-gray-500">
                         <span>Service Fees</span>
-                        <span>${order?.serviceFee}</span>
+                        <span>${panier?.serviceFee}</span>
                     </div>
                     <div className="flex items-center justify-between p-2 text-gray-500">
                         <span>Delivery Fee</span>
-                        <span>${order.deliveryFee}</span>
+                        <span>${panier.deliveryFee}</span>
                     </div>
                     <div className="flex items-center justify-between p-2 text-gray-500 border-t">
                         <span className="text-lg font-medium">Total</span>
-                        <span className="text-lg font-medium">${order.total} </span>
+                        <span className="text-lg font-medium">${panier.total} </span>
                     </div>
                 </div>
                 <div className="mt-3 p-2 bg-slate-50 rounded-md">
                     <p>
                         Delivery Note:
-                        <span className="text-xs ml-2 text-gray-500">{order.note}</span>
+                        <span className="text-xs ml-2 text-gray-500">{panier.note}</span>
                     </p>
                     <p>
                         Delivery Address:{" "}
-                        <span className="text-xs ml-2 text-gray-500">{order.deliveryAddress}
+                        <span className="text-xs ml-2 text-gray-500">{panier.deliveryAddress}
                         </span>{" "}
                     </p>
                 </div>

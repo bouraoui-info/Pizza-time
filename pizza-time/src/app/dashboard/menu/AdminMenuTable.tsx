@@ -12,6 +12,7 @@ const AdminMenuTable = () => {
             after: null as null | string,
         },
     ]);
+console.log({pageVariables});
 
     return (
         <TableWrapper title={"All Menus"}>
@@ -51,16 +52,15 @@ const AdminMenuTable = () => {
                         </tr>
                     </thead>
 
-                    {pageVariables.map((variables, i) => (
+                    {/* {pageVariables.map((variables, i) => ( */}
                         <AdminFetchedMenus
-                            key={"" + variables.after}
-                            variables={variables}
-                            isAdminLastPage={i === pageVariables.length - 1}
+                        menus={[]}
+                            isAdminLastPage={true}
                             onLoadMore={(after) =>
                                 setPageVariables([...pageVariables, { after, first: 4 }])
                             }
                         />
-                    ))}
+                    {/* ))} */}
                 </table>
             </Suspense>
         </TableWrapper>
