@@ -5,7 +5,7 @@ import AdminAddCategory from "./AdminAddCategory";
 import AdminEditCategory from "./AdminEditCategory";
 import AdminDeleteCategory from "./AdminDeleteCategory";
 
-import { categoriesData } from "@/data/categories-data";
+import { categoriesData } from "../../../Data/categories-data";
 
 const AdminCategories = () => {
   return (
