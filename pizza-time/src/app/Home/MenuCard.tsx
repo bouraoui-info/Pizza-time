@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
 import {Menu}   from '../../types';
-import FavoritesBtn from '../common/FavoritesBtn';
+import FavoritesBtn from '../common/favoritesBtn';
 type Props = {
   menu: Menu
   openModal: () => void
