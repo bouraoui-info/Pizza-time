@@ -1,9 +1,8 @@
 
-
-export default function Loading() {
+export default function DataLoading() {
     return (
-      <div className=" flex flex-col items-center justify-center text-center   py-8 px-6 md:h-screen ">
-      <p className="text-green-800 pb-5 animate-pulse">Loading...</p>
+      <div className=" flex flex-col items-center justify-center text-center   py-6 px-6  ">
+      <p className="text-green-400 pb-5 animate-pulse">Loading ...</p>
     <div role="status">
       <svg
         className="inline mr-2 w-16 h-16 text-gray-200 animate-spin  fill-green-800"
@@ -25,3 +24,4 @@ export default function Loading() {
   </div>
     );
   }
+  
