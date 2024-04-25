@@ -30,9 +30,10 @@ const CompanyPage = ({ companyIndextoshow }: Props) => {
     }
 
     const companyToShow = Object.values(card.shoplist)[companyIndextoshow] as Company;
-const[number,setNumber]=React.useState(0);
+    const [number, setNumber] = React.useState(0);
     return (
         <div>
+
             <Header number={number} />
             <SideBar />
             <Logobanner />
@@ -75,11 +76,11 @@ const[number,setNumber]=React.useState(0);
                     {MenuData.map((menu: any, index) => (
                         <MenuModal key={index} menu={menu} setNumber={setNumber} number={number} />
                     ))}
-                     
+
                 </div>
-               
+
             </section>
-            <Footer/>
+            <Footer />
         </div>
 
     );

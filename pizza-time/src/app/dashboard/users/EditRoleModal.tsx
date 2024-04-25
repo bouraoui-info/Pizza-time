@@ -7,7 +7,7 @@ type Props = {
     user: {
         id: number;
         email: string;
-        role: string;
+        address: string;
     };
 };
 
