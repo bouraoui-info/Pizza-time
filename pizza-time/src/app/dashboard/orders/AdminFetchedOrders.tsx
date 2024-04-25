@@ -12,9 +12,10 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
   const router = useRouter();
 
   const changeOrderStatus = async (id: string, newStatus: string, successMessage: string) => {
+    let userId=JSON.parse(localStorage.getItem("user")??"")?.id
     try {
-      const res = await fetch("/api/panier", {
-        method: "PUT",
+      const res = await fetch(`/api/panier`, {
+        method: "Get",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id,
@@ -37,11 +38,13 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
     <>
       <tbody>
         {panier.map((panier) => (
-          <tr className="bg-white whitespace-nowrap" key={panier.id}>
-            <td className="px-6 py-3">{panier.orderNumber} </td>
-            <td className="px-6 py-3 ">{panier.paymentToken}</td>
-            <td className="px-6 py-3">{panier.orderDate} </td>
-            <td className="px-6 py-3">{panier.userName} </td>
+          <tr className="bg-white whitespace-nowrap" >
+            <td className="px-6 py-3">{panier.id} </td>
+            <td className="px-6 py-3 ">{panier.etat}</td>
+            <td className="px-6 py-3">{panier.time} </td>
+            <td className="px-6 py-3">{panier.userId} </td>
+            <td className="px-6 py-3">{panier.prix} </td>
+
             <td className="px-6 py-3 max-w-xs ">
               {" "}
               <p className="truncate ...">
@@ -81,7 +84,7 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
             </td>
 
             <td className="px-6 py-3">
-              <AdminOrderModal panier={panier} />{" "}
+              <AdminOrderModal panier={panier?.panier??[]} />{" "}
             </td>
           </tr>
         ))}

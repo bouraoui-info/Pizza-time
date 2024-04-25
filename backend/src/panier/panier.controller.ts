@@ -48,12 +48,13 @@ export class PanierController {
         return await this.panierService.createPanier(partialPanier);
     }
 
-    @Get(':id')
+    @Get()
     async getPanier(
-        @Param('id') userId: User,
+      
     ) {
         try {
-            const panier = await this.panierService.findAllPanier({ where: { id_user: userId, etat: 'non payé' } });
+            const panier = await this.panierService.findAllPanier({ where: {  etat: 'non payé' } });
+            
             return panier;
         } catch (e) {
             return { message: 'Get panier error:', e };

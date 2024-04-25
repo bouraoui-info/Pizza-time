@@ -9,6 +9,7 @@ type AdminOrderProps = {
 
 const AdminOrderModal = ({ panier }: AdminOrderProps) => {
     const [isOpen, setIsOpen] = useState(false);
+    console.log({panier});
 
     const openModal = () => setIsOpen(true);
     const closeModal = () => setIsOpen(false);
@@ -29,7 +30,7 @@ const AdminOrderModal = ({ panier }: AdminOrderProps) => {
                 </div>
 
                 <div className="mt-4">
-                    {panier.cart.map((cart: any) => (
+                    {panier.map((cart: any) => (
                         <div className="flex items-center space-y-3 " key={cart?.id}>
                             <div className="w-16 h-16 overflow-hidden  rounded-full">
                                 <Image
