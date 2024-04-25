@@ -36,7 +36,7 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
 
   return (
     <>
-      <tbody>
+      
         {panier.map((panier) => (
           <tr className="bg-white whitespace-nowrap" >
             <td className="px-6 py-3">{panier.id} </td>
@@ -88,7 +88,6 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
             </td>
           </tr>
         ))}
-      </tbody>
 
       <tfoot className="flex justify-center py-3">
         <tr>

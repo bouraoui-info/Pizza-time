@@ -1,11 +1,6 @@
 import React from 'react';
-import { HiStar } from 'react-icons/hi2';
 import Image from 'next/image'; // Correct import statement
-
 import logo from "../../../public/Objects/logo.jpg"; // Correct import statement
-import { card } from '@/constats';
-import Icons from '../icons/Icons';
-
 import "../globals.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
