@@ -44,7 +44,7 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
             <td className="px-6 py-3">{panier.time} </td>
             <td className="px-6 py-3">{panier.userId} </td>
             <td className="px-6 py-3">{panier.prix} </td>
-
+            <td className="px-6 py-3 ">{panier.etat}</td>
             <td className="px-6 py-3 max-w-xs ">
               {" "}
               <p className="truncate ...">
