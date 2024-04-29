@@ -4,7 +4,8 @@ import { CartItem } from './panier.interface';
 import { User } from 'src/users/user.entity';
 import { DeepPartial, UpdateResult } from 'typeorm';
 import { Panier } from './panier.entity';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
+@ApiTags('Panier')
 
 @Controller('panier')
 export class PanierController {

@@ -1,51 +1,113 @@
-import React from 'react';
-import Link from 'next/link';
-import { card } from "../../constats";
-import Map from '../Maps/page';
-const Boutiques = () => {
+"use client"
+import { useRouter } from "next/navigation";
+import React from "react";
+import { IoRestaurant } from "react-icons/io5";
+import { HiMiniMapPin } from "react-icons/hi2";
+import { Button } from "react-bootstrap";
+import Icons from "../icons/Icons";
+import { setId } from "../store";
 
-  const getCurrentTime = () => {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+function CardBoutique() {
+  const router = useRouter();
+  const [shopList, setShopList] = React.useState<any>([]);
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  
+  
+  
+  
+  const getShopList = async () => {
+    
+    try {
+      const response = await fetch(`http://localhost:3001/StRestau`,
+       {
+        method: "GET",
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const jsonData = await response.json();
+      console.log({ jsonData });
+
+      setShopList(jsonData);
+      localStorage.setItem("shopLength", jsonData.length);
+    } catch (e) {
+      console.error("Login error", e);
+    }
   };
 
-  const isBoutiqueOpen = (openingTime: any, closingTime: any) => {
-    const currentTime = getCurrentTime();
-    return currentTime >= openingTime && currentTime <= closingTime;
+  // Fonction pour naviguer vers une autre page avec l'ID
+  const navigateToOtherPage = (id: number) => {
+    setId(id);
+    localStorage.setItem("id", id.toString());
+    var jsonString = JSON.stringify(shopList[id].card);
+
+    // Sample JSON data
+    var jsonData = {
+      workflow: shopList[id]?.card.workflow,
+      categories: shopList[id]?.card.categories,
+      items: shopList[id]?.card.items,
+    };
+
+    // Convert JSON data to a string
+    var jsonString = JSON.stringify(jsonData);
+
+    // Store the JSON string in localStorage
+    localStorage.setItem("card", jsonString);
+
+    router.push("/components/Boutiques");
   };
 
+  React.useEffect(() => {
+    getShopList();
+  }, []);
   return (
-    <div className='text-3xl font-semibold text-center text-gray-600 sm:text-4xl'>Nos Boutiques
-      <div className="container text-center">
+    <section className="news_section">
+      <div className="container">
+        <div className="heading_container heading_center">
+          <h2>
+            {" "}
+            <IoRestaurant /> Bienvenue au Pizza Time <IoRestaurant />
+          </h2>
+        </div>
+
         <div className="row">
-          {Object.values(card.shoplist).map((shoplist: any, index) => {
-            const isOpen = isBoutiqueOpen(shoplist.openingTime, shoplist.closingTime);
-            return (
-              <div className="col" key={index}>
-                <Link href={`/boutiques/${shoplist.shopid}`} key={shoplist.id}>
-                  <div className={`bg-white rounded-lg shadow-md overflow-hidden cursor-pointer ${isOpen ? 'border-green-500' : 'border-red-500'}`}>
-                    <img src={shoplist.image} alt={shoplist.title} className="w-full h-48 object-cover" />
-                    <div className="p-4">
-                      <h3 className="text-lg font-semibold">{shoplist.Address}</h3>
-                      <p className="text-gray-600">Company: {shoplist.Company}</p>
-                      <p className="text-gray-600">Country: {shoplist.Country}</p>
-                      <p className="text-gray-600">PostalCode: {shoplist.PostalCode}</p>
-                      <p className={`text-${isOpen ? 'green-600' : 'red-600'}`}>
-                        {isOpen ? 'Open' : 'Closed'}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
+          {Object.values(shopList).map((items: any, id: number) => (
+            <div
+              className="col-md-4 my-3"
+              key={id}
+              onClick={() => {
+                localStorage.setItem("resto", JSON.stringify(items.resto));
+                navigateToOtherPage(items.resto.shopid);
+              }}
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <div className="box">
+                <div className="img-box">
+                  <img src={items.resto.image} className="box-img" alt="" />
+                </div>
+                <div className="detail-box">
+                  <h4> {items.resto.Company}</h4>
+                  <p>
+                    {" "}
+                    <HiMiniMapPin />
+                    {items.resto.Address}, {items.resto.PostalCode}{" "}
+                    {items.resto.town}
+                  </p>
+                </div>
+                <div>
+                  <Icons />
+                </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
-      <Map />
-    </div>
+    </section>
   );
 }
 
-export default Boutiques;
+export default CardBoutique;

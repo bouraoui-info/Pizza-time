@@ -1,7 +1,7 @@
 import { Test,TestingModule  } from "@nestjs/testing";
 import { UsersController } from '../users/users.controlleur';
 
-describe('UsersControiller', () => {
+describe('UsersController', () => {
 let controller: UsersController;
 beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

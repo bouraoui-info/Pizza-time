@@ -28,3 +28,10 @@ increaseCartItem:(menu: CartItemType[], id:string) => void;
 decreaseCartItem:(menu: CartItemType[], id:string) => void;
 resetCart:()=>void; 
 }; 
+
+export type CustomCategory = {
+    desc: string;
+    id: string;
+    category: string;
+    imageSrc: string;
+  };

@@ -53,7 +53,7 @@ console.log({pageVariables});
                     </thead>
 
                     {/* {pageVariables.map((variables, i) => ( */}
-                        <AdminFetchedMenus
+                    <AdminFetchedMenus
                         menus={[]}
                             isAdminLastPage={true}
                             onLoadMore={(after) =>
