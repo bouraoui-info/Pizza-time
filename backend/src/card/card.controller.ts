@@ -1,36 +1,39 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { CardService } from '../card/card.service';
 import { Item, SupplimentComposition, card, categories, shoplist } from '../card/card.interface';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Card')
 
 @Controller('card')
 export class CardController {
     constructor(
-        private cardServices:CardService
-    ){}
+        private cardServices: CardService
+    ) { }
     @Post('AddCard')
     async AddCard(
-        @Body('title')  title:string,
-        @Body('items')  items:Item[],
-        @Body('SupplimentComposition')  SupplimentComposition:SupplimentComposition[],
-        @Body('shoplist')  shoplist:shoplist[],
-        @Body('categories')  categories:categories[],
+        @Body('title') title: string,
+        @Body('items') items: Item[],
+        @Body('SupplimentComposition') SupplimentComposition: SupplimentComposition[],
+        @Body('shoplist') shoplist: shoplist[],
+        @Body('categories') categories: categories[],
 
-    ){
-        const card = await this.cardServices.createCard({title,items,SupplimentComposition,shoplist,categories})
+    ) {
+        const card = await this.cardServices.createCard({ title, items, SupplimentComposition, shoplist, categories })
         return card
     }
     @Get("card")
-    async card(){
-        try{
-            const card = await this.cardServices.findOne({where:{id:1}});
+    async card() {
+        try {
+            const card = await this.cardServices.findOne({ where: { id: 1 } });
             return card
-        }catch(e){
-            return{message:'Get card error:', e}
+        } catch (e) {
+            return { message: 'Get card error:', e }
         }
 
     }
     @Get()
-    findAll():Promise<card[]>{
+    findAll(): Promise<card[]> {
         return this.cardServices.findAllCard()
     }
 }

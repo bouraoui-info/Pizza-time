@@ -6,6 +6,10 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { ProductModule } from './product/product.module';
 import { PanierModule } from './panier/panier.module';
+import { ShoplistModule } from './shoplist/shoplist.module';
+import { ItemsModule } from './items/items.module';
+import { CategoriesModule } from './categories/categories.module';
+import { CardModule } from './card/card.module';
 
 
 
@@ -29,6 +33,11 @@ import { PanierModule } from './panier/panier.module';
     UsersModule,
     PanierModule,
     ProductModule,
+    ShoplistModule,
+    ItemsModule, 
+    CategoriesModule, 
+    CardModule, 
+
   ],
 
   controllers: [AppController],

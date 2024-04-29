@@ -4,7 +4,7 @@ import { horaire, shoplist, villelivraison } from '../shoplist/shoplist.interfac
 import { ApiTags } from '@nestjs/swagger';
 
 
-@ApiTags('ShopList')
+@ApiTags('Shoplist')
 
 
 @Controller('shoplist')
@@ -66,7 +66,7 @@ export class ShoplistController {
             villelivraison,
             horaire,
             Responsible,
-            etat
+            etat,
         };
         return await this.shoplistServices.create(newShoplist);
     }
@@ -83,6 +83,11 @@ export class ShoplistController {
     //delete shopList
     @Delete(':id')
     async delete(@Param('id') id: number): Promise<void> {
-        await this.shoplistServices.delete(id);
+
+        const shoplist = await this.shoplistServices.findOne(id);
+        if (!shoplist) {
+            throw new Error('Shoplist not found');
+        }
+        return this.shoplistServices.delete(id);
     }
 }

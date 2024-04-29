@@ -10,10 +10,11 @@ export class ShoplistService {
         @InjectRepository(shoplistEntity)
         private readonly shoplistReposotory: Repository<shoplistEntity>
     ) { }
-
+    // create Shoplist
     async createShop(shoplist: shoplist): Promise<shoplist> {
         return this.shoplistReposotory.save(shoplist)
     }
+    // get all Shoplist
     findAll(): Promise<shoplist[]> {
         return this.shoplistReposotory.find()
     }

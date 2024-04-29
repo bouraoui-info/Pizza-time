@@ -1,6 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ItemsService } from '../items/items.service';
 import { BasicComposition, Item } from '../items/items.interface';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Card')
 
 @Controller('items')
 export class ItemsController {

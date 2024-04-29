@@ -1,6 +1,10 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { categories } from '../categories/categories.interface';
 import { CategoriesService } from '../categories/categories.service';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Card')
+
 
 @Controller('categories')
 export class CategoriesController {
