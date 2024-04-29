@@ -30,9 +30,9 @@ export class ShoplistController {
         }
     }
     //create shopList
-    @Post('AddItems')
+    @Post('Addshoplist')
 
-    async AddItems(
+    async Addshoplist(
         @Body('id') id: number,
         @Body('town') town: string,
         @Body('image') image: string,

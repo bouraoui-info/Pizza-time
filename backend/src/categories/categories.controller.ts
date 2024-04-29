@@ -3,7 +3,7 @@ import { categories } from '../categories/categories.interface';
 import { CategoriesService } from '../categories/categories.service';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Card')
+@ApiTags('Categories')
 
 
 @Controller('categories')

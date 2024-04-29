@@ -17,4 +17,17 @@ async createItem(item:Item): Promise<Item>{
 findAllItem():Promise<Item[]>{
     return this.itemsReposotory.find()
 }
+findOne(id:number):Promise<Item>{
+    return this.itemsReposotory.findOne({where:{id}})
+}
+async updateItem(id:number,item:Item):Promise<Item>{
+    await this.itemsReposotory.update(id,item)
+    return this.itemsReposotory.findOne({where:{id}})
+}
+
+async deleteItem (id:number):Promise<void>{
+    await this.itemsReposotory.delete(id)
+}
+
+
 }

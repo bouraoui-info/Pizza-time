@@ -1,19 +1,19 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ItemsService } from '../items/items.service';
 import { BasicComposition, Item } from '../items/items.interface';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Card')
+@ApiTags('Items')
 
 @Controller('items')
 export class ItemsController {
     constructor(
-    private itemsServices:ItemsService
+    private readonly itemsServices:ItemsService
 ){}
-
+//create item
 @Post('AddItems')
 async AddItems(
-    @Body('id')  id: string,
+    @Body('id')  id: number,
     @Body('title')  title: string,
     @Body('price')  price: number,
     @Body('ranks')  ranks: number,
@@ -30,10 +30,32 @@ async AddItems(
     }
     
 }
+//Get all items
 @Get()
 findAll():Promise<Item[]>{
     return(this.itemsServices.findAllItem())
 }
+
+//Get one item
+@Get(':id')
+findOne(@Param('id') id: number): Promise<Item> {
+    const item = this.itemsServices.findOne(id);
+    if (!item) {
+        throw new Error('Item not found');
+    } else {
+        return item;
+    }
+}
+
+//delete item
+@Delete(':id')
+async deleteItem(@Param('id') id: number): Promise<void> {
+    await this.itemsServices.deleteItem(id);
+}
+//update item
+
+
+
 
 
 }

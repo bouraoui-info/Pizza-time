@@ -4,7 +4,7 @@ import {  BasicComposition} from "./items.interface";
 @Entity('items')
 export class itemsEntity{
     @PrimaryColumn()
-    id:string
+    id:number
 
     @Column({default: ""})
     title:string;
