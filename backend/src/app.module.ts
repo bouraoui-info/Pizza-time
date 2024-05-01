@@ -33,9 +33,6 @@ import { CardModule } from './card/card.module';
     UsersModule,
     PanierModule,
     ProductModule,
-    ShoplistModule,
-    ItemsModule, 
-    CategoriesModule, 
     CardModule, 
 
   ],

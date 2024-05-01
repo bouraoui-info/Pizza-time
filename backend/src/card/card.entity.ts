@@ -31,7 +31,7 @@ export class cardEntity {
     @Column({ default: "" })
     Nature: string;
 
-    @Column({})
+    @Column({default: "0"})
     shopid: number;
 
     @Column({ default: "" })
@@ -66,7 +66,7 @@ export class cardEntity {
 
     @Column({ default: "" })
     etat: string;
-    
+
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
