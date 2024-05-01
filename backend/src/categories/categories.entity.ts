@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 @Entity('categories')
 export class categoriesEntity{
     @PrimaryColumn()
-    id:string; 
+    id:number; 
 
     @Column( {type: "simple-array"})
     items:string[];

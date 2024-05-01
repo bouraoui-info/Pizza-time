@@ -5781,7 +5781,7 @@ export const card:any=
             "Company": "boutique 1",
             "Country": "GUYANCOURT",
             "PostalCode": "78280",
-            "Responsible": "",
+            "Responsible": "Abdallah Bouraoui",
             "openingTime":"8:00", 
             "closingTime":"20:00",
         },

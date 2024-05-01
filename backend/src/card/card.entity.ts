@@ -1,28 +1,74 @@
 import { timeStamp } from "console";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import {  Item, SupplimentComposition, categories, shoplist } from "./card.interface";
+import { Item, SupplimentComposition, categories, horaire, shoplist, villelivraison } from "./card.interface";
 
 @Entity('card')
-export class cardEntity{
+export class cardEntity {
     @PrimaryGeneratedColumn()
-    id:number
+    id: number
 
-    @Column({default: ""})
-    title:string;
+    @Column({ default: "" })
+    title: string;
 
-    @Column({ type: 'jsonb' }) 
+    @Column({ type: 'jsonb' })
     items: Item[];
 
     @Column({ type: 'jsonb' })
-    SupplimentComposition:SupplimentComposition[];
+    SupplimentComposition: SupplimentComposition[];
 
-    @Column({ type: 'jsonb' }) 
+    @Column({ type: 'jsonb' })
     shoplist: shoplist[];
 
-    @Column({ type: 'jsonb' }) 
+    @Column({ type: 'jsonb' })
     categories: categories[];
 
-    @Column({type:'timestamp',default:()=>'CURRENT_TIMESTAMP'})
-    createdAt:Date;
+    @Column({ default: "" })
+    town: string;
+
+    @Column({ default: "" })
+    image: string;
+
+    @Column({ default: "" })
+    Nature: string;
+
+    @Column({})
+    shopid: number;
+
+    @Column({ default: "" })
+    Address: string;
+
+    @Column({ default: "" })
+    Company: string;
+
+    @Column({ default: "" })
+    Country: string;
+
+    @Column({ default: "" })
+    PostalCode: string;
+
+    @Column({ type: 'float', default: 0.000000 })
+    latitude: number;
+
+    @Column({ type: 'float', default: 0.000000 })
+    longitude: number;
+
+    @Column({ default: "" })
+    tel: string;
+
+    @Column({ type: 'jsonb' })
+    villelivraison: villelivraison;
+
+    @Column({ type: 'jsonb' })
+    horaire: horaire;
+
+    @Column({ default: "" })
+    Responsible: string;
+
+    @Column({ default: "" })
+    etat: string;
+    
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
 
 }

@@ -1,11 +1,11 @@
-export interface card{
-    id?:number;
-    title:string;
-    items?:Item[];
-    SupplimentComposition?:SupplimentComposition[];
-    shoplist?:shoplist[];
-    categories?:categories[];
-    createdAt?:Date;
+export interface card {
+    id?: number;
+    title: string;
+    items?: Item[];
+    SupplimentComposition?: SupplimentComposition[];
+    shoplist?: shoplist[];
+    categories?: categories[];
+    createdAt?: Date;
 }
 
 
@@ -19,7 +19,7 @@ interface BasicCompositionItem {
 }
 
 interface BasicComposition {
-[key: string]: BasicCompositionItem;
+    [key: string]: BasicCompositionItem;
 }
 
 export interface Item {
@@ -33,7 +33,7 @@ export interface Item {
     allergens?: string[]; // Assuming these are IDs of allergens
 
 }
-export interface SupplimentComposition  {
+export interface SupplimentComposition {
     id: number;
     rank: number;
     title: string;
@@ -57,14 +57,14 @@ export interface shoplist {
     longitude: number;
     tel: string;
     villelivraison: {
-    [key: string]: {
-        nom: string;
-        fraislivraison: string;
-        mincommande: string;
-    };
+        [key: string]: {
+            nom: string;
+            fraislivraison: string;
+            mincommande: string;
+        };
     };
     horaire: {
-    [key: string]: string;
+        [key: string]: string;
     };
     responsible: string;
     etat: string;
@@ -75,71 +75,85 @@ export interface categories {
     color: string;
     items: string[];
     ranks: {
-    default: number;
-    orderOverride: {
-    Order: number;
-    IdShop: number;
-    }[];
+        default: number;
+        orderOverride: {
+            Order: number;
+            IdShop: number;
+        }[];
     };
     title: string;
     video: {
-    url: string;
-    type: string;
+        url: string;
+        type: string;
     };
     idCard: number;
     archive: boolean;
     imageUrl: {
-    Default: {
-        urlDefault: string;
-        salesSupport: any[]; // This might need further definition
-    };
-    override: {
-        shopId: string;
-        info: any[]; // This might need further definition
-        salesSupport: any[]; // This might need further definition
-    }[];
+        Default: {
+            urlDefault: string;
+            salesSupport: any[]; // This might need further definition
+        };
+        override: {
+            shopId: string;
+            info: any[]; // This might need further definition
+            salesSupport: any[]; // This might need further definition
+        }[];
     };
     reference: string;
     linkedTags: string[];
     description: {
-    Default: {
-        impression: any[]; // This might need further definition
-        nameDefault: string;
-        salesSupport: any[]; // This might need further definition
-    };
+        Default: {
+            impression: any[]; // This might need further definition
+            nameDefault: string;
+            salesSupport: any[]; // This might need further definition
+        };
     };
     displayName: {
         Default: {
-        impression: any[]; // This might need further definition
-        nameDefault: string;
-        salesSupport: {
-        Langue: {
-            value: string;
-            visibility: boolean;
-            designation: string;
-        }[];
-        visibility: boolean;
-        sellingSupport: string;
-        }[];
-    };
+            impression: any[]; // This might need further definition
+            nameDefault: string;
+            salesSupport: {
+                Langue: {
+                    value: string;
+                    visibility: boolean;
+                    designation: string;
+                }[];
+                visibility: boolean;
+                sellingSupport: string;
+            }[];
+        };
     };
     categoryChild: any[]; // This might need further definition
     categoryParent: string;
     visibilityInfo: {
-    default: {
-    [key: string]: {
-        id: string;
-        visibility: boolean;
-        sellingSupport: {
-        visibility: boolean;
-        sellingSupport: string;
-        }[];
+        default: {
+            [key: string]: {
+                id: string;
+                visibility: boolean;
+                sellingSupport: {
+                    visibility: boolean;
+                    sellingSupport: string;
+                }[];
+            };
+        };
+        isVisible: boolean;
+        basicCompositionVisibility: boolean;
     };
-    };
-    isVisible: boolean;
-    basicCompositionVisibility: boolean;
-};
-isNameDisplayed: boolean;
-linkedChildCategories: any[]; // This might need further definition
-isInformationModeActivated: boolean;
+    isNameDisplayed: boolean;
+    linkedChildCategories: any[]; // This might need further definition
+    isInformationModeActivated: boolean;
+}
+export interface villelivraison{
+
+[key : string] : {
+nom : string;
+fraislivraison : string;
+mincommande : string;
+}
+}
+export interface horaire{
+
+[key : string] : {
+}
+
 }

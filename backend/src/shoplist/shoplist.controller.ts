@@ -1,25 +1,20 @@
 import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
 import { ShoplistService } from '../shoplist/shoplist.service';
 import { horaire, shoplist, villelivraison } from '../shoplist/shoplist.interface';
-import { ApiTags } from '@nestjs/swagger';
-
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Shoplist')
-
-
 @Controller('shoplist')
-
 export class ShoplistController {
     constructor(
         private shoplistServices: ShoplistService
     ) { }
 
-    //Get all shopList
     @Get()
     async findAll(): Promise<shoplist[]> {
         return await this.shoplistServices.findAll();
     }
-    //Get one shopList
+
     @Get(':id')
     async findOne(@Param('id') id: number): Promise<shoplist> {
         const shoplist = await this.shoplistServices.findOne(id);
@@ -29,9 +24,31 @@ export class ShoplistController {
             return shoplist;
         }
     }
-    //create shopList
-    @Post('Addshoplist')
 
+    @Post('Addshoplist')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                id: { type: 'number' },
+                town: { type: 'string' },
+                image: { type: 'string' },
+                Nature: { type: 'string' },
+                shopid: { type: 'number' },
+                Address: { type: 'string' },
+                Company: { type: 'string' },
+                Country: { type: 'string' },
+                PostalCode: { type: 'string' },
+                latitude: { type: 'number' },
+                longitude: { type: 'number' },
+                tel: { type: 'string' },
+                villelivraison: { type: 'villelivraison' },
+                horaire: { type: 'horaire' }, // Ajoutez les deux-points ':' après horaire
+                Responsible: { type: 'string' },
+                etat: { type: 'string' },
+            }
+        }
+    })
     async Addshoplist(
         @Body('id') id: number,
         @Body('town') town: string,
@@ -71,7 +88,6 @@ export class ShoplistController {
         return await this.shoplistServices.create(newShoplist);
     }
 
-    //update shopList
     @Put(':id')
     async update(
         @Param('id') id: number,
@@ -80,10 +96,8 @@ export class ShoplistController {
         return await this.shoplistServices.update(id, shoplist);
     }
 
-    //delete shopList
     @Delete(':id')
     async delete(@Param('id') id: number): Promise<void> {
-
         const shoplist = await this.shoplistServices.findOne(id);
         if (!shoplist) {
             throw new Error('Shoplist not found');

@@ -7,24 +7,25 @@ import { Button } from "react-bootstrap";
 import Icons from "../icons/Icons";
 import { setId } from "../store";
 
-function CardBoutique() {
+function Boutiques() {
   const router = useRouter();
   const [shopList, setShopList] = React.useState<any>([]);
   const [isAdmin, setIsAdmin] = React.useState(false);
-  
-  
-  
-  
+
+
+
+
   const getShopList = async () => {
-    
+
     try {
-      const response = await fetch(`http://localhost:3001/StRestau`,
-       {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(`http://localhost:3001/api/shoplist
+      `,
+        {
+          method: "GET",
+        });
       if (!response.ok) {
         throw new Error("Failed to fetch data");
+
       }
 
       const jsonData = await response.json();
@@ -45,9 +46,9 @@ function CardBoutique() {
 
     // Sample JSON data
     var jsonData = {
-      workflow: shopList[id]?.card.workflow,
-      categories: shopList[id]?.card.categories,
-      items: shopList[id]?.card.items,
+      workflow: shopList[id]?.workflow,
+      categories: shopList[id]?.categories,
+      items: shopList[id]?.items,
     };
 
     // Convert JSON data to a string
@@ -56,7 +57,7 @@ function CardBoutique() {
     // Store the JSON string in localStorage
     localStorage.setItem("card", jsonString);
 
-    router.push("/components/Boutiques");
+    router.push("/Home/Boutiques");
   };
 
   React.useEffect(() => {
@@ -68,6 +69,7 @@ function CardBoutique() {
         <div className="heading_container heading_center">
           <h2>
             {" "}
+            
             <IoRestaurant /> Bienvenue au Pizza Time <IoRestaurant />
           </h2>
         </div>
@@ -79,7 +81,7 @@ function CardBoutique() {
               key={id}
               onClick={() => {
                 localStorage.setItem("resto", JSON.stringify(items.resto));
-                navigateToOtherPage(items.resto.shopid);
+                navigateToOtherPage(items.shopid);
               }}
               style={{
                 cursor: "pointer",
@@ -87,15 +89,15 @@ function CardBoutique() {
             >
               <div className="box">
                 <div className="img-box">
-                  <img src={items.resto.image} className="box-img" alt="" />
+                  <img src={items.image} className="box-img" alt="" />
                 </div>
                 <div className="detail-box">
-                  <h4> {items.resto.Company}</h4>
+                  <h4> {items.Company}</h4>
                   <p>
                     {" "}
                     <HiMiniMapPin />
-                    {items.resto.Address}, {items.resto.PostalCode}{" "}
-                    {items.resto.town}
+                    {items.Address}, {items.PostalCode}{" "}
+                    {items.town}
                   </p>
                 </div>
                 <div>
@@ -110,4 +112,4 @@ function CardBoutique() {
   );
 }
 
-export default CardBoutique;
+export default Boutiques;

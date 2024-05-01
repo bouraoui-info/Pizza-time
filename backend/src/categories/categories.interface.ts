@@ -1,5 +1,5 @@
 export interface categories {
-    id: string;
+    id: number;
     items: string[];
     ranks: number;
     title: string;
