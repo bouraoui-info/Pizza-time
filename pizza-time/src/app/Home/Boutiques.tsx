@@ -18,8 +18,7 @@ function Boutiques() {
   const getShopList = async () => {
 
     try {
-      const response = await fetch(`http://localhost:3001/api/shoplist
-      `,
+      const response = await fetch(`http://localhost:3001/api/restaurant `,
         {
           method: "GET",
         });
@@ -38,6 +37,9 @@ function Boutiques() {
     }
   };
 
+  const goto = () => {
+    router.push("/Page/addResto");}
+
   // Fonction pour naviguer vers une autre page avec l'ID
   const navigateToOtherPage = (id: number) => {
     setId(id);
@@ -46,16 +48,16 @@ function Boutiques() {
 
     // Sample JSON data
     var jsonData = {
-      workflow: shopList[id]?.workflow,
-      categories: shopList[id]?.categories,
-      items: shopList[id]?.items,
+      workflow: shopList[id]?.card.workflow,
+      categories: shopList[id]?.card.categories,
+      items: shopList[id]?.card.items,
     };
 
     // Convert JSON data to a string
     var jsonString = JSON.stringify(jsonData);
 
     // Store the JSON string in localStorage
-    localStorage.setItem("card", jsonString);
+    localStorage.setItem("resto", jsonString);
 
     router.push("/Home/Boutiques");
   };
@@ -64,40 +66,43 @@ function Boutiques() {
     getShopList();
   }, []);
   return (
-    <section className="news_section">
+    
       <div className="container">
-        <div className="heading_container heading_center">
-          <h2>
+        <div className="heading_container heading_center text-center">
+          <h4>
             {" "}
-            
-            <IoRestaurant /> Bienvenue au Pizza Time <IoRestaurant />
-          </h2>
+            Bienvenue au Pizza Time 
+          </h4>
         </div>
 
         <div className="row">
           {Object.values(shopList).map((items: any, id: number) => (
+            
             <div
               className="col-md-4 my-3"
               key={id}
               onClick={() => {
                 localStorage.setItem("resto", JSON.stringify(items.resto));
-                navigateToOtherPage(items.shopid);
+                navigateToOtherPage(items.resto.shopid);
               }}
               style={{
                 cursor: "pointer",
               }}
+              
             >
               <div className="box">
                 <div className="img-box">
-                  <img src={items.image} className="box-img" alt="" />
+                  <img src={items.resto.image} className="box-img" alt="" />
                 </div>
+                
+                
                 <div className="detail-box">
-                  <h4> {items.Company}</h4>
+                  <h4> {items.resto.Company}</h4>
                   <p>
                     {" "}
                     <HiMiniMapPin />
-                    {items.Address}, {items.PostalCode}{" "}
-                    {items.town}
+                    {items.resto.Address}, {items.resto.PostalCode}{" "}
+                    {items.resto.town}{" "}
                   </p>
                 </div>
                 <div>
@@ -107,8 +112,9 @@ function Boutiques() {
             </div>
           ))}
         </div>
+        {isAdmin === true ? <Button onClick={goto}> add resto </Button> : null}
       </div>
-    </section>
+    
   );
 }
 

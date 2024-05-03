@@ -47,6 +47,7 @@ export default function Addresto() {
                     closingTime: closingTime,
                     openingTime: openingTime,
                 },
+
                 card: {
                     etat: "En attente",
                     tags: {},
@@ -2288,11 +2289,15 @@ export default function Addresto() {
                                         placeholder="Heure de fermeture"
                                     />
                                 </div>
-                            </ModalBody>
-                            <ModalFooter>
+
+                                <div className="modal-footer ">
+                                <Button color="primary" onClick={handleSubmit} >Ajouter</Button>&nbsp; &nbsp; &nbsp;
                                 <Button color="secondary" onClick={onClose}>Fermer</Button>
-                                <Button color="primary" onClick={handleSubmit}>Ajouter</Button>
-                            </ModalFooter>
+                                
+                                </div>
+                                
+                            </ModalBody>
+                            
                         </>
                     )}
                 </ModalContent>
