@@ -10,10 +10,12 @@ import {
     Delete,
     Res,
     UnauthorizedException,
+    Query,
   } from '@nestjs/common';
   import { RestoService } from './resto.service';
   import { Product } from '../resto/product.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { query } from 'express';
   @ApiTags("restaurant")
   @Controller('restaurant')
   export class RestoController {
@@ -67,6 +69,20 @@ import { ApiTags } from '@nestjs/swagger';
     @Get()
     async findAll(): Promise<Product[]> {
       return await this.RestoService.findAllResto();
+    }
+    @Post('addCategorie')
+    async addCategorie(
+      @Query('idResto') id:number,
+      @Body('card') card: any,
+    ) {
+      
+      let resto:any=await this.RestoService.findOneResto({where:{id}});
+     
+      resto.card.categories={...resto.card.categories,...card}
+       console.log({resto:resto.card.categories});
+      
+      // console.log({resto})
+      return this.RestoService.ajouter(resto);
     }
   }
    

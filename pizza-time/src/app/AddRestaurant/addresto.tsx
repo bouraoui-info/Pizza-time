@@ -6,7 +6,6 @@ import {
     ModalContent,
     ModalHeader,
     ModalBody,
-    ModalFooter,
     useDisclosure
 } from "@nextui-org/modal";
 
@@ -26,6 +25,7 @@ export default function Addresto() {
 
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
+
         let shopId: any = localStorage.getItem("shopLength");
         const response = await fetch("http://localhost:3001/api/restaurant/addresto", 
         {
