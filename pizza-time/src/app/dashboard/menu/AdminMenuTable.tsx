@@ -1,10 +1,14 @@
 "use client";
 import React from "react";
+
+
 import TableWrapper from "../Components/TableWrapper";
 import AddCategorie from "./AjouterCategories";
 
 const AdminMenuTable = () => {
-    const handleDelete = (id: number) => {
+       const [showModal, setShowModal] = React.useState(false);
+
+        const handleDelete = (id: number) => {
         // API call to delete the restaurant with the given ID
         fetch(`http://localhost:3001/api/restaurant/${id}`, {
             method: "DELETE",
@@ -43,10 +47,11 @@ const AdminMenuTable = () => {
         }
     };
 
-    const [showModal, setShowModal] = React.useState(false);
+
 
     React.useEffect(() => {
         getShopList();
+        
     }, []);
 
     return (
