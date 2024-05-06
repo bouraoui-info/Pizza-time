@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import TableWrapper from "../Components/TableWrapper";
-import AddCategorie from "./AjouterCategories";
+import AddProduit from "./AddProduit";
 
-const AdminMenuTable = () => {
+const listecategories = () => {
     const handleDelete = (id: number) => {
         // API call to delete the restaurant with the given ID
         fetch(`http://localhost:3001/api/restaurant/${id}`, {
@@ -26,6 +26,12 @@ const AdminMenuTable = () => {
 
 
     const [shopList, setShopList] = React.useState<any>([]);
+
+    
+
+
+    
+
     const getShopList = async () => {
         try {
             const response = await fetch(`http://localhost:3001/api/restaurant`, {
@@ -50,7 +56,7 @@ const AdminMenuTable = () => {
     }, []);
 
     return (
-        <TableWrapper title={"All Restaurants"}>
+        <TableWrapper title={"All Catégories"}>
             <table className="w-full text-left text-slate-500">
                 <thead className="text-xs overflow-x-auto whitespace-nowrap text-slate-700 uppercase bg-slate-100">
                     <tr>
@@ -61,22 +67,22 @@ const AdminMenuTable = () => {
                             />
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            IdResto
+                            Idcategories
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Name
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Adress
+                            Image
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Town
+                            Restaurants
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Delete
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Categories
+                            liste des Produits 
                         </th>
                     </tr>
                 </thead>
@@ -98,7 +104,7 @@ const AdminMenuTable = () => {
                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                     onClick={() => handleDelete(item.resto.id)}
                                 >
-                                    Supprimer  Categories
+                                    Supprimer Produit
                                 </button>
                             </td>
                             <td className="px-6 py-3">
@@ -106,7 +112,7 @@ const AdminMenuTable = () => {
                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     onClick={() => setShowModal(true)}
                                 >
-                                    Ajouter Categories
+                                    Ajouter Produit
                                 </button>
                             </td>
 
@@ -114,14 +120,11 @@ const AdminMenuTable = () => {
                     ))}
                 </tbody>
             </table>
-            <AddCategorie
-                showModal={showModal}
-                setShowModal={setShowModal}
-                setUpdate={() => { }}
-                Update={false}
-            />
+            
+            {showModal && <AddProduit setShowModal={setShowModal} showModal={showModal} />}
+          
         </TableWrapper>
     );
 };
 
-export default AdminMenuTable;
+export default listecategories;

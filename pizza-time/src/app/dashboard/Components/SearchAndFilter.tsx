@@ -44,12 +44,31 @@ const SearchAndFilter = () => {
               </button>
             </div>
             <div className="flex items-center space-x-3 w-full md:w-auto">
-        </div>
-        <div className="flex items-center space-x-3 w-full md:w-auto">
-        </div>
+            </div>
+            <div className="flex items-center space-x-3 w-full md:w-auto">
+            </div>
           </>
         )}
 
+        {pathname === "/dashboard/menu/ListeCatégories" && (
+          <>
+            <div className="flex items-center space-x-3 w-full md:w-auto">
+            </div>
+            <div className="flex items-center space-x-3 w-full md:w-auto">
+              <button
+                type="button"
+                className="text-white inline-flex items-center whitespace-nowrap bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+              >
+                <HiPlus className="mr-1 -ml-1 w-4 h-4" />
+                Ajouter Categories
+              </button>
+            </div>
+            <div className="flex items-center space-x-3 w-full md:w-auto">
+            </div>
+            <div className="flex items-center space-x-3 w-full md:w-auto">
+            </div>
+          </>
+        )}
         {pathname === "/dashboard/orders" && (
           <>
             <div className="flex items-center space-x-3 w-full md:w-auto">

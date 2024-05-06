@@ -9,7 +9,7 @@ type AddCategorieType = {
     Update: boolean
 }
 
-export default function AddCategorie({ showModal, setShowModal, setUpdate, Update }: AddCategorieType) {
+export default function AddCategorie({ showModal, setShowModal }: AddCategorieType) {
     const [image, setImage] = useState("");
     const [title, setTitle] = useState("");
 
@@ -151,7 +151,6 @@ export default function AddCategorie({ showModal, setShowModal, setUpdate, Updat
                     }
                 }),
             });
-        setUpdate(!Update)
     };
 
     const handleCloseModal = () => setShowModal(false);
