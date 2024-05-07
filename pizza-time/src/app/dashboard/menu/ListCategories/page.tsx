@@ -1,9 +1,12 @@
 "use client";
 import React from "react";
-import TableWrapper from "../Components/TableWrapper";
-import AddProduit from "./AddProduit";
+import TableWrapper from "../../Components/TableWrapper";
+import AddProduit from "../AddProduit";
+import { useSnapshot } from "valtio";
+import { store } from "@/app/store";
+import Image from "next/image";
 
-const listecategories = () => {
+export default function ListeCategories() {
     const handleDelete = (id: number) => {
         // API call to delete the restaurant with the given ID
         fetch(`http://localhost:3001/api/restaurant/${id}`, {
@@ -26,15 +29,15 @@ const listecategories = () => {
 
 
     const [shopList, setShopList] = React.useState<any>([]);
+    const { selectedResto } = useSnapshot(store)
 
-    
 
 
-    
+
 
     const getShopList = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/api/restaurant`, {
+            const response = await fetch(`http://localhost:3001/api/restaurant/${selectedResto}/categories`, {
                 method: "GET",
             });
             if (!response.ok) {
@@ -42,7 +45,7 @@ const listecategories = () => {
             }
             const jsonData = await response.json();
             console.log({ jsonData });
-            setShopList(jsonData);
+            setShopList({ ...jsonData });
             localStorage.setItem("shopLength", jsonData.length);
         } catch (e) {
             console.error("Login error", e);
@@ -53,6 +56,8 @@ const listecategories = () => {
 
     React.useEffect(() => {
         getShopList();
+        console.log({ shopList });
+
     }, []);
 
     return (
@@ -82,29 +87,35 @@ const listecategories = () => {
                             Delete
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            liste des Produits 
+                            liste des Produits
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {shopList.map((item: any, id: number) => (
-                        <tr key={id}>
+                    {Object.keys(shopList).map((key: any) => (
+                        <tr key={key}>
                             <td className="px-6 py-3">
                                 <input
                                     className="w-4 h-4 accent-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500"
                                     type="checkbox"
                                 />
                             </td>
-                            <td className="px-6 py-3">{item.resto.id}</td>
-                            <td className="px-6 py-3">{item.resto.Name}</td>
-                            <td className="px-6 py-3">{item.resto.Address}</td>
-                            <td className="px-6 py-3">{item.resto.town}</td>
+                            <td className="px-6 py-3">{key}</td>
+                            <td className="px-6 py-3">{shopList[key].title}</td>
+                            <td className="px-6 py-3">   <Image
+                                src={shopList[key].imageUrl.Default.urlDefault}
+                                className="rounded-full"
+                                alt=""
+                                width={30}
+                                height={30}
+                            /></td>
+                            {/* <td className="px-6 py-3">{shopList[key].resto.town}</td> */}
                             <td className="px-6 py-3">
                                 <button
                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => handleDelete(item.resto.id)}
+                                    onClick={() => handleDelete(shopList[key].resto.id)}
                                 >
-                                    Supprimer Produit
+                                    Supprimer Catégories
                                 </button>
                             </td>
                             <td className="px-6 py-3">
@@ -112,7 +123,7 @@ const listecategories = () => {
                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     onClick={() => setShowModal(true)}
                                 >
-                                    Ajouter Produit
+                                    Liste des Produits
                                 </button>
                             </td>
 
@@ -120,11 +131,10 @@ const listecategories = () => {
                     ))}
                 </tbody>
             </table>
-            
+
             {showModal && <AddProduit setShowModal={setShowModal} showModal={showModal} />}
-          
+
         </TableWrapper>
     );
 };
 
-export default listecategories;

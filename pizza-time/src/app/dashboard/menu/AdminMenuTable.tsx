@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
-
-
 import TableWrapper from "../Components/TableWrapper";
-import AddCategorie from "./AjouterCategories";
+import Link from "next/link";
+import useLocation from "@/app/hooks/useLocation";
+import { useRouter } from 'next/navigation'
+import { setSelectedResto } from "@/app/store";
 
 const AdminMenuTable = () => {
-       const [showModal, setShowModal] = React.useState(false);
-
-        const handleDelete = (id: number) => {
+    const handleDelete = (id: number) => {
         // API call to delete the restaurant with the given ID
         fetch(`http://localhost:3001/api/restaurant/${id}`, {
             method: "DELETE",
@@ -28,6 +27,7 @@ const AdminMenuTable = () => {
             .catch((error) => console.error(error));
     };
 
+    const router=useRouter()
 
     const [shopList, setShopList] = React.useState<any>([]);
     const getShopList = async () => {
@@ -47,12 +47,16 @@ const AdminMenuTable = () => {
         }
     };
 
-
+const handleClick=(idresto:number)=>{
+    setSelectedResto(idresto)
+    router.push("/dashboard/menu/ListCategories")
+}
 
     React.useEffect(() => {
         getShopList();
-        
+
     }, []);
+
 
     return (
         <TableWrapper title={"All Restaurants"}>
@@ -94,8 +98,8 @@ const AdminMenuTable = () => {
                                     type="checkbox"
                                 />
                             </td>
-                            <td className="px-6 py-3">{item.resto.id}</td>
-                            <td className="px-6 py-3">{item.resto.Name}</td>
+                            <td className="px-6 py-3">{id}</td>
+                            <td className="px-6 py-3">{item.resto.Company}</td>
                             <td className="px-6 py-3">{item.resto.Address}</td>
                             <td className="px-6 py-3">{item.resto.town}</td>
                             <td className="px-6 py-3">
@@ -107,24 +111,22 @@ const AdminMenuTable = () => {
                                 </button>
                             </td>
                             <td className="px-6 py-3">
-                                <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => setShowModal(true)}
-                                >
-                                    Ajouter Categories
-                                </button>
+                                <td className="px-6 py-3">
+                                    <button onClick={()=>handleClick(item.id)}>
+                                        Liste des Catégories
+                                    </button>
+                                </td>
+
+                                
+                                {/* <ListeCatégories/>  */}
+
                             </td>
 
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <AddCategorie
-                showModal={showModal}
-                setShowModal={setShowModal}
-                setUpdate={() => { }}
-                Update={false}
-            />
+
         </TableWrapper>
     );
 };

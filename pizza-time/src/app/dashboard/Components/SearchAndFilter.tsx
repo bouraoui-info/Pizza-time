@@ -50,7 +50,7 @@ const SearchAndFilter = () => {
           </>
         )}
 
-        {pathname === "/dashboard/menu/ListeCatégories" && (
+        {pathname === "/dashboard/menu/ListCategories" && (
           <>
             <div className="flex items-center space-x-3 w-full md:w-auto">
             </div>
