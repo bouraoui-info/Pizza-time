@@ -8,7 +8,9 @@ type StoreType = {
     time: number;
     isDropdownOpen: boolean;
     id: number; 
-    selectedResto:number
+    selectedResto:number;
+    selectedCat:number;
+
 };
 
 export const store = proxy<StoreType>({
@@ -18,7 +20,8 @@ export const store = proxy<StoreType>({
     totalPrice: 0,
     panier:[],
     id:0,
-    selectedResto:0
+    selectedResto:0,
+    selectedCat:0
 
 });
 export function setId(id: number): void {
@@ -45,6 +48,11 @@ export function setSelectedResto(
     selectedResto:any
 ): void {
     store.selectedResto = selectedResto;
+}
+export function setSelectedCat(
+    selectedCat:any
+): void {
+    store.selectedCat = selectedCat;
 }
 export const usecartStore = create<CartType & CartAction>()(
     devtools(

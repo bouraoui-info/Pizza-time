@@ -98,7 +98,7 @@ const handleClick=(idresto:number)=>{
                                     type="checkbox"
                                 />
                             </td>
-                            <td className="px-6 py-3">{id}</td>
+                            <td className="px-6 py-3">{item.id}</td>
                             <td className="px-6 py-3">{item.resto.Company}</td>
                             <td className="px-6 py-3">{item.resto.Address}</td>
                             <td className="px-6 py-3">{item.resto.town}</td>
@@ -116,10 +116,6 @@ const handleClick=(idresto:number)=>{
                                         Liste des Catégories
                                     </button>
                                 </td>
-
-                                
-                                {/* <ListeCatégories/>  */}
-
                             </td>
 
                         </tr>

@@ -3,10 +3,13 @@ import React from "react";
 import TableWrapper from "../../Components/TableWrapper";
 import AddProduit from "../AddProduit";
 import { useSnapshot } from "valtio";
-import { store } from "@/app/store";
+import { setSelectedCat, store } from "@/app/store";
 import Image from "next/image";
+import { useRouter } from 'next/navigation'
 
 export default function ListeCategories() {
+    const router=useRouter()
+
     const handleDelete = (id: number) => {
         // API call to delete the restaurant with the given ID
         fetch(`http://localhost:3001/api/restaurant/${id}`, {
@@ -32,7 +35,11 @@ export default function ListeCategories() {
     const { selectedResto } = useSnapshot(store)
 
 
+    const handleClick=(idCat:number)=>{
+        setSelectedCat(idCat)
+        router.push("/dashboard/menu/ListProduit")
 
+    }
 
 
     const getShopList = async () => {
@@ -56,7 +63,6 @@ export default function ListeCategories() {
 
     React.useEffect(() => {
         getShopList();
-        console.log({ shopList });
 
     }, []);
 
@@ -119,21 +125,17 @@ export default function ListeCategories() {
                                 </button>
                             </td>
                             <td className="px-6 py-3">
-                                <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => setShowModal(true)}
-                                >
-                                    Liste des Produits
-                                </button>
+                                <td className="px-6 py-3">
+                                    <button onClick={()=>handleClick(key)}>
+                                        Liste des Produits
+                                    </button>
+                                </td>
                             </td>
 
                         </tr>
                     ))}
                 </tbody>
             </table>
-
-            {showModal && <AddProduit setShowModal={setShowModal} showModal={showModal} />}
-
         </TableWrapper>
     );
 };

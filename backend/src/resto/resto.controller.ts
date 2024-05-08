@@ -19,6 +19,7 @@ import { query } from 'express';
 @ApiTags("restaurant")
 @Controller('restaurant')
 export class RestoController {
+  productRepository: any;
   constructor(
     private readonly RestoService: RestoService,
   ) { }
@@ -81,9 +82,7 @@ export class RestoController {
     let resto: any = await this.RestoService.findOneResto({ where: { id } });
 
     resto.card.categories = { ...resto.card.categories, ...card }
-    console.log({ resto: resto.card.categories });
 
-    // console.log({resto})
     return this.RestoService.ajouter(resto);
   }
   @Get(':id/categories')
@@ -94,4 +93,34 @@ export class RestoController {
     }
     return resto.card.categories;
   }
-}
+  @Get(':idResto/:idCat/product')
+  async findOneProduct(@Param('idResto') idResto: number,@Param('idCat') idCat: string): Promise<Product> {    
+    const product :any= await this.RestoService.findOneProduct(idResto);
+    let items=product.card.categories[idCat].items;
+    let listproduct:any=[];
+    items.forEach((el:any)=>{
+      let item=product.card.items[el]
+      listproduct.push({...item,idProduct:el})
+    })
+    if (!product) {
+      throw new Error('Product not found');
+    }
+    return listproduct;
+  }
+
+
+
+  @Post('addproduit')
+  async addProduct(
+    @Body() productData: any,
+  ) {
+    try {
+      const { title, image, price } = productData;
+      const newProduct = this.productRepository.create(productData);
+      return await this.productRepository.save(newProduct);
+    } catch (error) {
+      console.log(error);
+      throw new Error('Error saving product');
+    }
+  }}
+
