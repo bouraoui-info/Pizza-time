@@ -38,7 +38,8 @@ function Boutiques() {
   };
 
   const goto = () => {
-    router.push("/Page/addResto");}
+    router.push("/Page/addResto");
+  }
 
   // Fonction pour naviguer vers une autre page avec l'ID
   const navigateToOtherPage = (id: number) => {
@@ -66,55 +67,43 @@ function Boutiques() {
     getShopList();
   }, []);
   return (
-    
-      <div className="container">
-        <div className="heading_container heading_center text-center">
-          <h4>
-            {" "}
-            Bienvenue au Pizza Time 
-          </h4>
-        </div>
+    <div className="container">
+      <div className="heading_container heading_center text-center">
+        <h4>Bienvenue au Pizza Time</h4>
+      </div>
 
-        <div className="row">
-          {Object.values(shopList).map((items: any, id: number) => (
-            
+      <div className="row">
+        {Object.values(shopList).map((items: any, id: number) => (
+          <div className="col-md-3 my-3" key={id}>
             <div
-              className="col-md-4 my-3"
-              key={id}
+              className="box"
               onClick={() => {
                 localStorage.setItem("resto", JSON.stringify(items.resto));
                 navigateToOtherPage(items.resto.shopid);
               }}
-              style={{
-                cursor: "pointer",
-              }}
-              
+              style={{ cursor: "pointer" }}
             >
-              <div className="box">
-                <div className="img-box">
-                  <img src={items.resto.image} className="box-img" alt="" />
-                </div>
-                
-                
-                <div className="detail-box">
-                  <h4> {items.resto.Company}</h4>
-                  <p>
-                    {" "}
-                    <HiMiniMapPin />
-                    {items.resto.Address}, {items.resto.PostalCode}{" "}
-                    {items.resto.town}{" "}
-                  </p>
-                </div>
-                <div>
-                  <Icons />
-                </div>
+              <div className="img-box">
+                <img src={items.resto.image} className="box-img" alt="" />
+              </div>
+
+              <div className="detail-box">
+                <h4>{items.resto.Company}</h4>
+                <p>
+                  <HiMiniMapPin />
+                  {items.resto.Address}, {items.resto.PostalCode} {items.resto.town}
+                </p>
+              </div>
+              <div>
+                <Icons />
               </div>
             </div>
-          ))}
-        </div>
-        {isAdmin === true ? <Button onClick={goto}> add resto </Button> : null}
+          </div>
+        ))}
       </div>
-    
+      {isAdmin === true ? <Button onClick={goto}> add resto </Button> : null}
+    </div>
+
   );
 }
 
