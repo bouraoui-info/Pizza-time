@@ -58,6 +58,7 @@ export default function ListeCategories() {
             console.error("Login error", e);
         }
     };
+    
 
     const [showModal, setShowModal] = React.useState(false);
 
@@ -108,7 +109,7 @@ export default function ListeCategories() {
                             </td>
                             <td className="px-6 py-3">{key}</td>
                             <td className="px-6 py-3">{shopList[key].title}</td>
-                            <td className="px-6 py-3">   <Image
+                            <td className="px-6 py-3">   <img
                                 src={shopList[key].imageUrl.Default.urlDefault}
                                 className="rounded-full"
                                 alt=""
