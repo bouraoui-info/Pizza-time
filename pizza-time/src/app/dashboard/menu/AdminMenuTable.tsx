@@ -111,7 +111,7 @@ const handleClick=(idresto:number)=>{
                                 </button>
                             </td>
                             <td className="px-6 py-3">
-                                <td className="px-6 py-3">
+                                <td className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                     <button onClick={()=>handleClick(item.id)}>
                                         Liste des Catégories
                                     </button>

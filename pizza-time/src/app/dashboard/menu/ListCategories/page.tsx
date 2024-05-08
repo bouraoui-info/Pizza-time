@@ -115,7 +115,7 @@ export default function ListeCategories() {
                                 width={30}
                                 height={30}
                             /></td>
-                            {/* <td className="px-6 py-3">{shopList[key].resto.town}</td> */}
+                             <td className="px-6 py-3">{shopList[key].title.town}</td> 
                             <td className="px-6 py-3">
                                 <button
                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -125,7 +125,7 @@ export default function ListeCategories() {
                                 </button>
                             </td>
                             <td className="px-6 py-3">
-                                <td className="px-6 py-3">
+                                <td className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                     <button onClick={()=>handleClick(key)}>
                                         Liste des Produits
                                     </button>
