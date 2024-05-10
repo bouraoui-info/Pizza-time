@@ -94,33 +94,36 @@ export class RestoController {
     return resto.card.categories;
   }
   @Get(':idResto/:idCat/product')
-  async findOneProduct(@Param('idResto') idResto: number,@Param('idCat') idCat: string): Promise<Product> {    
-    const product :any= await this.RestoService.findOneProduct(idResto);
-    let items=product.card.categories[idCat].items;
-    let listproduct:any=[];
-    items.forEach((el:any)=>{
-      let item=product.card.items[el]
-      listproduct.push({...item,idProduct:el})
+  async findOneProduct(@Param('idResto') idResto: number, @Param('idCat') idCat: string): Promise<Product> {
+    const product: any = await this.RestoService.findOneProduct(idResto);
+    let items = product.card.categories[idCat].items;
+    let listproduct: any = [];
+    items.forEach((el: any) => {
+      let item = product.card.items[el]
+      listproduct.push({ ...item, idProduct: el })
     })
     if (!product) {
       throw new Error('Product not found');
     }
     return listproduct;
   }
-
-
-
-  @Post('addproduit')
-  async addProduct(
-    @Body() productData: any,
-  ) {
-    try {
-      const { title, image, price } = productData;
-      const newProduct = this.productRepository.create(productData);
-      return await this.productRepository.save(newProduct);
-    } catch (error) {
-      console.log(error);
-      throw new Error('Error saving product');
+  //ajouter Items
+  @Post(':idResto/:idCat/addItem')
+  async addItem(
+    @Param('idCat') idCat: string,
+    @Param('idResto') idResto: number,
+    @Body('card') card: any,
+  ): Promise<Product> {
+    const product: any = await this.RestoService.findOneProduct(idResto);
+    if (!product) {
+      throw new Error('Product not found');
     }
-  }}
+    console.log({product});
+    console.log({card});
+    console.log({"cc":product.card.categories,idCat})
 
+    product.card.categories[idCat].items = [...product.card.categories[idCat].items,card.id];
+    product.card.items = { ...product.card.items, [card.id]:{...card} };
+    return this.RestoService.saveItems(product);
+  }
+}

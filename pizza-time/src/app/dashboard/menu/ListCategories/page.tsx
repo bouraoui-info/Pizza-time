@@ -35,7 +35,7 @@ export default function ListeCategories() {
     const { selectedResto } = useSnapshot(store)
 
 
-    const handleClick=(idCat:number)=>{
+    const handleClick=(idCat:string)=>{
         setSelectedCat(idCat)
         router.push("/dashboard/menu/ListProduit")
 

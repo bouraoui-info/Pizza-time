@@ -32,11 +32,15 @@ export class RestoService {
     return await this.productRepository.findOne({ where: { id } });
   }
 
-  async addProduct(productData: Partial<Product>): Promise<Product> {
-    // Créez une nouvelle instance de Product avec les données fournies
-    const newProduct = this.productRepository.create(productData);
-
-    // Enregistrez le nouveau produit dans la base de données
-    return await this.productRepository.save(newProduct);
+  async save(product: Product): Promise<Product> {
+    return this.productRepository.save(product);
   }
-}
+  saveItems(items: any): Promise<Product> {
+    return this.productRepository.save(items);
+  }
+
+  }
+
+
+
+

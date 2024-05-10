@@ -101,7 +101,7 @@ export default function ListProduit() {
                             </td>
                             <td className="px-6 py-3">{el.idProduct}</td>
                             <td className="px-6 py-3">{el.title}</td>
-                            <td className="px-6 py-3">   <Image
+                            <td className="px-6 py-3">   <img
                                 src={el.imageUrl.Default.urlDefault}
                                 className="rounded-full"
                                 alt=""
@@ -110,7 +110,7 @@ export default function ListProduit() {
                             />
                 
                             </td>
-                            <td className="px-6 py-3">{el.price.priceHT}</td>
+                            <td className="px-6 py-3">{el.priceHT??el.price}</td>
 
                             <td className="px-6 py-3">
                                 <button
