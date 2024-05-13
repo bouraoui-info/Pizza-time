@@ -118,12 +118,40 @@ export class RestoController {
     if (!product) {
       throw new Error('Product not found');
     }
-    console.log({product});
-    console.log({card});
-    console.log({"cc":product.card.categories,idCat})
+    console.log({ product });
+    console.log({ card });
+    console.log({ "cc": product.card.categories, idCat })
 
-    product.card.categories[idCat].items = [...product.card.categories[idCat].items,card.id];
-    product.card.items = { ...product.card.items, [card.id]:{...card} };
+    product.card.categories[idCat].items = [...product.card.categories[idCat].items, card.id];
+    product.card.items = { ...product.card.items, [card.id]: { ...card } };
     return this.RestoService.saveItems(product);
   }
+  //delete Categorie
+  @Delete(':idResto/:idCat')
+async deleteCategory(
+  @Param('idResto') idResto: number,
+  @Param('idCat') idCat: string
+) {
+  try {
+    const resto: any = await this.RestoService.findOneResto({ where: { id: idResto } });
+
+    if (!resto) {
+      throw new Error('Restaurant not found');
+    }
+
+    if (!resto.card || !resto.card.categories) {
+      throw new Error('Invalid restaurant data');
+    }
+    
+    if (resto.card.categories[idCat]) {
+      delete resto.card.categories[idCat];
+      await this.RestoService.ajouter(resto);
+      return `Category ${idCat} deleted successfully`;
+    } else {
+      throw new Error('Category not found');
+    }
+  } catch (error) {
+    throw new Error(`Failed to delete category: ${error.message}`);
+  }
+}
 }

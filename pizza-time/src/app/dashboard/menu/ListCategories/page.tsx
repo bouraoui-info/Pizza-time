@@ -4,21 +4,32 @@ import TableWrapper from "../../Components/TableWrapper";
 import AddProduit from "../AddProduit";
 import { useSnapshot } from "valtio";
 import { setSelectedCat, store } from "@/app/store";
-import Image from "next/image";
 import { useRouter } from 'next/navigation'
+import toast from "react-hot-toast";
 
 export default function ListeCategories() {
-    const router=useRouter()
+    const router = useRouter()
+    const { selectedResto ,selectedCat} = useSnapshot(store)
 
-    const handleDelete = (id: number) => {
-        // API call to delete the restaurant with the given ID
-        fetch(`http://localhost:3001/api/restaurant/${id}`, {
+    // const handleDelete = async (idCat: string) => {
+
+    //     setSelectedCat(idCat)
+    //     router.push("/dashboard/menu/ListProduit")
+    // }
+    //     ;
+    const handleDelete = async (key:any) => {
+        setShowModal(false);
+        const response = await fetch(`http://localhost:3001/api/restaurant/${selectedResto}/${key}`, {
             method: "DELETE",
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error(error));
-    };
+            headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete the category');
+        }
+        await response.json();
+        toast.success('Category successfully deleted');
+        router.push("/dashboard/menu/ListCategories");
+    }
 
     const handleCategories = (id: number) => {
         // API call to retrieve the categories for the restaurant with the given ID
@@ -32,14 +43,14 @@ export default function ListeCategories() {
 
 
     const [shopList, setShopList] = React.useState<any>([]);
-    const { selectedResto } = useSnapshot(store)
 
 
-    const handleClick=(idCat:string)=>{
+    const handleClick = (idCat: string) => {
         setSelectedCat(idCat)
         router.push("/dashboard/menu/ListProduit")
 
     }
+
 
 
     const getShopList = async () => {
@@ -58,7 +69,7 @@ export default function ListeCategories() {
             console.error("Login error", e);
         }
     };
-    
+
 
     const [showModal, setShowModal] = React.useState(false);
 
@@ -116,18 +127,18 @@ export default function ListeCategories() {
                                 width={30}
                                 height={30}
                             /></td>
-                             <td className="px-6 py-3">{shopList[key].title.town}</td> 
+                            <td className="px-6 py-3">{shopList[key].title.town}</td>
                             <td className="px-6 py-3">
                                 <button
                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => handleDelete(shopList[key].resto.id)}
+                                    onClick={() => handleDelete(key)}
                                 >
                                     Supprimer Catégories
                                 </button>
                             </td>
                             <td className="px-6 py-3">
                                 <td className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    <button onClick={()=>handleClick(key)}>
+                                    <button onClick={() => handleClick(key)}>
                                         Liste des Produits
                                     </button>
                                 </td>

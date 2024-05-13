@@ -5,12 +5,12 @@ import Image from "next/image";
 import { HiPencil } from "react-icons/hi2";
 import UploadImg from "../Components/UploadImg";
 
-const RestaurantDetails = () => {
+export default function RestaurantDetails() {
   const [image, setImage] = useState("");
 
   const getBannerImgFile = async (file: File) => {
     console.log(file);
-    
+
   };
   return (
     <>
@@ -18,55 +18,69 @@ const RestaurantDetails = () => {
         <h2>Edit Restaurant Details </h2>
         <HiPencil />
       </div>
-
-      <form className="grid w-full px-4 py-8 gap-4 md:grid-cols-2 bg-white ">
+      <form className="grid w-full px-4 py-8 gap-4 md:grid-cols-2 bg-blue ">
         <div className="grid gap-4 mb-4 sm:grid-cols-2">
-          <div className="sm:col-span-2 border-gray-300">
-            <Image
-              src="/img/banner.jpg"
-              alt="chefy"
-              width={360}
-              height={200}
-              className="h-32 w-full object-cover rounded-md "
-            />
-          </div>
-          <div>
-            <label htmlFor="name" className="form-label ">
+
+          <div className="col-12">
+            <label htmlFor="inputName" className="form-label">
               Name
             </label>
-            <input type="text" name="name" id="name" className="form-input" />
+            <input
+              type="text"
+              className="form-control"
+              id="inputName"
+              placeholder="Your New Name"
+            />
           </div>
-          <div>
-            <label htmlFor="price" className="form-label ">
+          <div className="col-12">
+            <label htmlFor="inputAddress" className="form-label">
               Address
             </label>
             <input
               type="text"
-              name="address"
-              id="address"
-              className="form-input"
+              className="form-control"
+              id="inputAddress"
+              placeholder="1234 Main St"
             />
           </div>
-          <div>
-            <label htmlFor="serviceFee" className="form-label ">
-              Service Fee
+          <div className="col-md-6">
+            <label htmlFor="inputCity" className="form-label">
+              Town
             </label>
-            <input type="number" name="serviceFee" className="form-input" />
+            <input type="text" className="form-control" id="inputCity" placeholder="Your City"
+            />
+
           </div>
-          <div>
-            <label htmlFor="deliveryFee" className="form-label ">
-              Delivery Fee
+          <div className="col-md-4">
+            <label htmlFor="inputState" className="form-label">
+              State
             </label>
-            <input type="number" name="deliveryFee" className="form-input" />
+            <select id="inputState" className="form-select">
+              <option value="" disabled selected>
+                Choose...
+              </option>
+              <option value="disabled selected" >
+                Tunisia
+              </option>
+              <option value="" >
+                France            
+                  </option>
+              {/* Add other options here */}
+            </select>
+          </div>
+          <div className="col-md-2">
+            <label htmlFor="inputZip" className="form-label">
+              Zip
+            </label>
+            <input type="text" className="form-control" id="inputZip" />
           </div>
         </div>
         <div>
           <UploadImg handleCallBack={getBannerImgFile} id="restDetails" />
         </div>
-
         <div className="">
           <button
-          type="submit"
+            type="submit"
             className="py-2 px-4 
               border border-transparent shadow-sm text-sm font-medium rounded-md
                text-white bg-green-600 hover:bg-green-700 focus:outline-none 
@@ -75,9 +89,9 @@ const RestaurantDetails = () => {
             Save Restaurant Details
           </button>
         </div>
+
       </form>
     </>
   );
 };
 
-export default RestaurantDetails;

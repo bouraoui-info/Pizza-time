@@ -27,7 +27,7 @@ const AdminMenuTable = () => {
             .catch((error) => console.error(error));
     };
 
-    const router=useRouter()
+    const router = useRouter()
 
     const [shopList, setShopList] = React.useState<any>([]);
     const getShopList = async () => {
@@ -47,10 +47,10 @@ const AdminMenuTable = () => {
         }
     };
 
-const handleClick=(idresto:number)=>{
-    setSelectedResto(idresto)
-    router.push("/dashboard/menu/ListCategories")
-}
+    const handleClick = (idresto: number) => {
+        setSelectedResto(idresto)
+        router.push("/dashboard/menu/ListCategories")
+    }
 
     React.useEffect(() => {
         getShopList();
@@ -112,7 +112,7 @@ const handleClick=(idresto:number)=>{
                             </td>
                             <td className="px-6 py-3">
                                 <td className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    <button onClick={()=>handleClick(item.id)}>
+                                    <button onClick={() => handleClick(item.id)}>
                                         Liste des Catégories
                                     </button>
                                 </td>

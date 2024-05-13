@@ -1,7 +1,6 @@
 import Container from "../../common/Container";
 import RestaurantDetails from "./RestaurantDetails";
 import OpeningHoursForm from "./OpeningHours";
-import AdminCategories from "./AdminCategories";
 
 
 const AdminSettings = () => {
@@ -13,7 +12,6 @@ const AdminSettings = () => {
         </div>
         <RestaurantDetails /> 
         <OpeningHoursForm />
-        <AdminCategories/> 
       </div>
     </Container>
   );

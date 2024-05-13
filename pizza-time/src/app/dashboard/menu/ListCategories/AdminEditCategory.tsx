@@ -1,39 +1,53 @@
-import { HiPlus } from "react-icons/hi2";
+import Image from "next/image";
+import { HiOutlinePencil, HiOutlinePencilSquare } from "react-icons/hi2";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "react-modal";
-import UploadImg from "../Components/UploadImg";
+import UploadImg from "../../Components/UploadImg";
 
-// Modal.setAppElement("#__next");
+type Props = {
+    cat: {
+        id: number;
+        title: string;
+        desc: string;
+        img: string;
+    };
+};
 
-const AdminAddCategory = () => {
+const AdminEditCategory = ({ cat }: Props) => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState("");
-    const [desc, setDesc] = useState("");
-    const [image, setImage] = useState("");
+    const [title, setTitle] = useState(cat.title);
+    const [desc, setDesc] = useState(cat.desc);
+    const [image, setImage] = useState(cat.img);
 
     const closeModal = () => setIsOpen(false);
     const OpenModal = () => setIsOpen(true);
+
     const getCategoryImgFile = async (file: File) => {
         console.log(file);
     };
 
     return (
         <>
-            <button
-                type="button"
-                className="text-white inline-flex items-center whitespace-nowrap bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            <HiOutlinePencilSquare
                 onClick={OpenModal}
-            >
-                <HiPlus className="mr-1 -ml-1 w-4 h-4" />
-                Add Category
-            </button>
+                className="cursor-pointer h-6 w-6 text-green-600"
+            />
             <Modal isOpen={isOpen} onRequestClose={closeModal}>
-                <form onSubmit={(e) => { e.preventDefault(); closeModal(); }}>
+                <form>
                     <div className="grid gap-4 mb-4 sm:grid-cols-2">
+                        <div className="sm:col-span-2 border-gray-300">
+                            <Image
+                                src={cat.img}
+                                alt="chefy"
+                                width={360}
+                                height={200}
+                                className="h-16 w-16 object-cover rounded-md "
+                            />
+                        </div>
                         <div>
-                            <label htmlFor="name" className="form-label">
+                            <label htmlFor="name" className="form-label ">
                                 Title
                             </label>
                             <input
@@ -46,7 +60,7 @@ const AdminAddCategory = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="desc" className="form-label">
+                            <label htmlFor="price" className="form-label ">
                                 Description
                             </label>
                             <input
@@ -61,14 +75,19 @@ const AdminAddCategory = () => {
                         </div>
                     </div>
 
-                    <UploadImg handleCallBack={getCategoryImgFile} id="addCategory" />
+                    <UploadImg handleCallBack={getCategoryImgFile} id="editCategory" />
 
                     <button
                         type="submit"
-                        className="text-white inline-flex items-center bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        className="text-white inline-flex items-center bg-green-600
+         hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300
+          font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                     >
-                        <HiPlus className="mr-1 -ml-1 w-4 h-4" fill="currentColor" />
-                        Add Category
+                        <HiOutlinePencil
+                            className="mr-1 -ml-1 w-4 h-4"
+                            fill="currentColor"
+                        />
+                        Edit Category
                     </button>
                 </form>
             </Modal>
@@ -76,4 +95,4 @@ const AdminAddCategory = () => {
     );
 };
 
-export default AdminAddCategory;
+export default AdminEditCategory;

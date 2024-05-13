@@ -33,17 +33,10 @@ const UploadImg = ({handleCallBack, id}:Props) => {
     },
     [handleCallBack]
   )
-
-//   const [saving, setSaving] = useState(false)
-
-//   const saveDisabled = useMemo(() => {
-//     return !data.image || saving
-//   }, [data.image, saving])
-
   return (
     <div>
       <div className="space-y-1 mb-4">
-        <h2 className="text-xl font-semibold">Upload a new file</h2>
+        <h2 className="text-xl font-semibold">Upload A New Restaurant Image</h2>
         <p className="text-sm text-gray-500">Accepted formats: .png, .jpg</p>
       </div>
       <label
