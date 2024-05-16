@@ -89,6 +89,15 @@ function RegistrationPage({ setShowRegistration }: any) {
             <input type="email" className='w-64 input ml-2 border rounded-lg p-1 outline-none' placeholder='Saisissez votre e-mail' onChange={(event) => setEmail(event.target.value)} required />
           </div>
         </div>
+        <div className="mb-2">
+          <div className="flex items-center mb-5">
+            <div className="mr-2">
+              <MdOutlineAttachEmail />
+            </div>
+            <label>Address</label>
+            <input type="Address" className='w-64 input ml-2 border rounded-lg p-1 outline-none' placeholder='Saisissez votre Addresse' onChange={(event) => setAddress(event.target.value)} required />
+          </div>
+        </div>
 
 
 

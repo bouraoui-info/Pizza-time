@@ -3,38 +3,36 @@ import React from "react";
 import TableWrapper from "../../Components/TableWrapper";
 import { useSnapshot } from "valtio";
 import { store } from "@/app/store";
-import Image from "next/image";
 
 export default function ListProduit() {
-    const handleDelete = (id: number) => {
-        // API call to delete the restaurant with the given ID
-        fetch(`http://localhost:3001/api/restaurant/${id}`, {
-            method: "DELETE",
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error(error));
-    };
-
-    const handleCategories = (id: number) => {
-        // API call to retrieve the categories for the restaurant with the given ID
-        fetch(`http://localhost:3001/api/restaurant/${id}/categories`, {
-            method: "GET",
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error(error));
-    };
-
-
     const [shopList, setShopList] = React.useState<any>([]);
     const { selectedResto } = useSnapshot(store)
     const { selectedCat } = useSnapshot(store)
 
 
+    const handleDelete = async (idProduct: string) => {
+        try {
+            console.log('Deleting product...',idProduct);
+            console.log('Selected Resto:', selectedResto);
+            console.log('Selected Cat:', selectedCat);
+            // API call to delete the restaurant with the given ID
+            const response = await fetch(`http://localhost:3001/api/restaurant/${selectedResto}/${selectedCat}/${idProduct}`,
+                {
+                    method: "DELETE",
+                    headers: { 'Content-Type': 'application/json' },
 
-
-
+                });
+            if (response.ok) {
+                // Handle successful deletion here
+                console.log('Product deleted successfully');
+            } else {
+                // Handle error here
+                console.error('Failed to delete the Product');
+            }
+        } catch (error) {
+            console.error('Error deleting product:', error);
+        }
+    }
 
     const getShopList = async () => {
         try {
@@ -47,14 +45,11 @@ export default function ListProduit() {
             const jsonData = await response.json();
             console.log({ jsonData });
             setShopList([...jsonData]);
-            localStorage.setItem("shopLength", jsonData.length);
+            localStorage.setItem("shopLength", jsonData.length.toString());
         } catch (e) {
             console.error("Login error", e);
         }
     };
-
-    const [showModal, setShowModal] = React.useState(false);
-
     React.useEffect(() => {
         getShopList();
 
@@ -108,9 +103,9 @@ export default function ListProduit() {
                                 width={30}
                                 height={30}
                             />
-                
+
                             </td>
-                            <td className="px-6 py-3">{el.priceHT??el.price}</td>
+                            <td className="px-6 py-3">{el.priceHT ?? el.price}</td>
 
                             <td className="px-6 py-3">
                                 <button

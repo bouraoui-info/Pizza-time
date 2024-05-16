@@ -118,14 +118,28 @@ export class RestoController {
     if (!product) {
       throw new Error('Product not found');
     }
-    console.log({ product });
-    console.log({ card });
-    console.log({ "cc": product.card.categories, idCat })
-
     product.card.categories[idCat].items = [...product.card.categories[idCat].items, card.id];
     product.card.items = { ...product.card.items, [card.id]: { ...card } };
     return this.RestoService.saveItems(product);
   }
+  //delete Items
+  @Delete(':idResto/:idCat/:idItem')
+  async deleteItem(
+
+    @Param('idResto') idResto: number,
+    @Param('idCat') idCat: string,
+    @Param('idItem') idItem: string
+    ): Promise<Product> {
+      const product: any = await this.RestoService.findOneProduct(idResto);
+      if (!product) {
+        throw new Error('Product not found');
+      }
+      product.card.categories[idCat].items = product.card.categories[idCat].items.filter(
+        (el: string) => el!== idItem
+      );
+      delete product.card.items[idItem];
+      return this.RestoService.saveItems(product);
+    }
   //delete Categorie
   @Delete(':idResto/:idCat')
   async deleteCategory(
