@@ -8,11 +8,12 @@ import { MdOutlineAttachEmail } from 'react-icons/md';
 import { FiChevronLeft } from 'react-icons/fi';
 function RegistrationPage({ setShowRegistration }: any) {
   const [name, setName] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [address, setAddress] = useState('');
 
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -24,10 +25,10 @@ function RegistrationPage({ setShowRegistration }: any) {
     }
 
     // Send the registration data to your backend API
-    const response = await fetch('/api/register', {
+    const response = await fetch('http://localhost:3001/api/users ', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, firstName, phone, email, password }),
+      body: JSON.stringify({ email, name, lastname, phone, address, password }),
     });
 
     const data = await response.json();
@@ -62,7 +63,7 @@ function RegistrationPage({ setShowRegistration }: any) {
               <TbUserSquareRounded />
             </div>
             <label>Prénom</label>
-            <input type="text" className='w-64 input ml-2 border rounded-lg p-1 outline-none' placeholder='Saisissez votre Prénom' onChange={(event) => setFirstName(event.target.value)} />
+            <input type="text" className='w-64 input ml-2 border rounded-lg p-1 outline-none' placeholder='Saisissez votre Prénom' onChange={(event) => setLastname(event.target.value)} />
           </div>
         </div>
 
@@ -105,13 +106,13 @@ function RegistrationPage({ setShowRegistration }: any) {
 
 
 
-         <div className="mb-2">
+          <div className="mb-2">
             <div className="flex items-center mb-5">
               <div className="mr-2">
                 <RiLockPasswordFill />
               </div>
               <label>Confirmer votre Mot de passe</label>
-              <input type="password" className='w-64 input ml-2 border rounded-lg p-1 outline-none' placeholder=' Confirmez votre mot de passe'onChange={(event) => setConfirmPassword(event.target.value)} required/>
+              <input type="password" className='w-64 input ml-2 border rounded-lg p-1 outline-none' placeholder=' Confirmez votre mot de passe' onChange={(event) => setConfirmPassword(event.target.value)} required />
             </div>
           </div>
         </div>

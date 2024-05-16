@@ -1,34 +1,12 @@
 "use client";
 import React from "react";
 import TableWrapper from "../Components/TableWrapper";
-import Link from "next/link";
-import useLocation from "@/app/hooks/useLocation";
 import { useRouter } from 'next/navigation'
 import { setSelectedResto } from "@/app/store";
+import Deleteresto from "@/app/AddRestaurant/Deleteresto";
 
 const AdminMenuTable = () => {
-    const handleDelete = (id: number) => {
-        // API call to delete the restaurant with the given ID
-        fetch(`http://localhost:3001/api/restaurant/${id}`, {
-            method: "DELETE",
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error(error));
-    };
-
-    const handleCategories = (id: number) => {
-        // API call to retrieve the categories for the restaurant with the given ID
-        fetch(`http://localhost:3001/api/restaurant/${id}/categories`, {
-            method: "GET",
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error(error));
-    };
-
     const router = useRouter()
-
     const [shopList, setShopList] = React.useState<any>([]);
     const getShopList = async () => {
         try {
@@ -51,13 +29,10 @@ const AdminMenuTable = () => {
         setSelectedResto(idresto)
         router.push("/dashboard/menu/ListCategories")
     }
-
     React.useEffect(() => {
         getShopList();
 
     }, []);
-
-
     return (
         <TableWrapper title={"All Restaurants"}>
             <table className="w-full text-left text-slate-500">
@@ -103,11 +78,8 @@ const AdminMenuTable = () => {
                             <td className="px-6 py-3">{item.resto.Address}</td>
                             <td className="px-6 py-3">{item.resto.town}</td>
                             <td className="px-6 py-3">
-                                <button
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => handleDelete(item.resto.id)}
-                                >
-                                    Supprimer  Restaurant
+                                <button>
+                                    <Deleteresto idResto={item.id} />
                                 </button>
                             </td>
                             <td className="px-6 py-3">
@@ -117,9 +89,9 @@ const AdminMenuTable = () => {
                                     </button>
                                 </td>
                             </td>
-
                         </tr>
                     ))}
+
                 </tbody>
             </table>
 

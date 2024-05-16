@@ -1,3 +1,4 @@
+"use client"
 import Modal from "react-modal";
 import { useState } from "react";
 import { HiOutlinePencilSquare } from "react-icons/hi2";

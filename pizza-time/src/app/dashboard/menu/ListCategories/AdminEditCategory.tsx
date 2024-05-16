@@ -90,6 +90,7 @@ const AdminEditCategory = ({ cat }: Props) => {
                         Edit Category
                     </button>
                 </form>
+
             </Modal>
         </>
     );

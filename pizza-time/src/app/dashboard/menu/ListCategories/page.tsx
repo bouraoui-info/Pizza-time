@@ -1,36 +1,14 @@
 "use client";
 import React from "react";
 import TableWrapper from "../../Components/TableWrapper";
-import AddProduit from "../AddProduit";
 import { useSnapshot } from "valtio";
 import { setSelectedCat, store } from "@/app/store";
 import { useRouter } from 'next/navigation'
-import toast from "react-hot-toast";
+import AdminDeleteCategory from "./AdminDeleteCategory";
 
 export default function ListeCategories() {
     const router = useRouter()
-    const { selectedResto ,selectedCat} = useSnapshot(store)
-
-    // const handleDelete = async (idCat: string) => {
-
-    //     setSelectedCat(idCat)
-    //     router.push("/dashboard/menu/ListProduit")
-    // }
-    //     ;
-    const handleDelete = async (key:any) => {
-        setShowModal(false);
-        const response = await fetch(`http://localhost:3001/api/restaurant/${selectedResto}/${key}`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-        });
-        if (!response.ok) {
-            throw new Error('Failed to delete the category');
-        }
-        await response.json();
-        toast.success('Category successfully deleted');
-        router.push("/dashboard/menu/ListCategories");
-    }
-
+    const { selectedResto, selectedCat } = useSnapshot(store)
     const handleCategories = (id: number) => {
         // API call to retrieve the categories for the restaurant with the given ID
         fetch(`http://localhost:3001/api/restaurant/${id}/categories`, {
@@ -71,7 +49,6 @@ export default function ListeCategories() {
     };
 
 
-    const [showModal, setShowModal] = React.useState(false);
 
     React.useEffect(() => {
         getShopList();
@@ -129,11 +106,8 @@ export default function ListeCategories() {
                             /></td>
                             <td className="px-6 py-3">{shopList[key].title.town}</td>
                             <td className="px-6 py-3">
-                                <button
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => handleDelete(key)}
-                                >
-                                    Supprimer Catégories
+                                <button>
+                                    <AdminDeleteCategory idCat={key} />
                                 </button>
                             </td>
                             <td className="px-6 py-3">
