@@ -1,9 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation";
 import React from "react";
-import { IoRestaurant } from "react-icons/io5";
 import { HiMiniMapPin } from "react-icons/hi2";
-import { Button } from "react-bootstrap";
 import Icons from "../icons/Icons";
 import { setId, setSelectedResto } from "../store";
 
@@ -64,9 +62,9 @@ function Boutiques() {
     getShopList();
   }, []);
   return (
-    <div className="container">
-      <div className="heading_container heading_center text-center">
-        <h4>Bienvenue au Pizza Time</h4>
+    <div className="container mx-auto py-8">
+      <div className="text-center mb-8">
+        <h4 className="text-xl font-bold">Bienvenue au Pizza Time</h4>
       </div>
 
       <div className="row">
@@ -82,8 +80,8 @@ function Boutiques() {
               }}
               style={{ cursor: "pointer" }}
             >
-              <div className="img-box">
-                <img src={items.resto.image} className="box-img" alt="" />
+              <div className="img-box overflow-hidden rounded-lg">
+                <img src={items.resto.image} className="object-cover w-full h-48" alt="items.resto.image" />
               </div>
 
               <div className="detail-box">
