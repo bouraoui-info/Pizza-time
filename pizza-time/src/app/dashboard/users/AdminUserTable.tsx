@@ -1,6 +1,7 @@
-// "use client";
+"use client";
 
 
+import { useEffect, useState } from "react";
 import TableWrapper from "../Components/TableWrapper";
 import EditRoleModal from "./EditRoleModal";
 import Image from "next/image";
@@ -14,22 +15,33 @@ type User = {
   image: string;
 };
 
-const fetchedUsers = async () => {
-  try {
-    const response = await fetch("http://localhost:3001/api/users");
-    return await response.json();
+const AdminUserTable = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [name, setName] = useState<string>("");
+  const [lastname, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+
+  useEffect(() => {
+    const fetchedUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/users");
+        const data = await response.json();
+        setUsers(data);
+        if (data.length > 0) {
+          setName(data[0].name);
+          setLastName(data[0].lastname);
+          setEmail(data[0].email);
+          setImage(data[0].image);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchedUsers();
     
-  } catch (error) {
-    return []
-    console.error("Error fetching users:", error);
-  }
-};
+  }, []);
 
-const AdminUserTable = async () => {
-
-  const users= await fetchedUsers();
-
- 
   return (
     <TableWrapper
       title={`All Users  `}
@@ -55,7 +67,7 @@ const AdminUserTable = async () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user:any) => (
+          {users.map((user) => (
             <tr className="bg-white" key={user.id}>
               <td className="px-6 py-2">
                 <Image

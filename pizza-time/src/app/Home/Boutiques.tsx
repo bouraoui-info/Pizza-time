@@ -5,7 +5,7 @@ import { IoRestaurant } from "react-icons/io5";
 import { HiMiniMapPin } from "react-icons/hi2";
 import { Button } from "react-bootstrap";
 import Icons from "../icons/Icons";
-import { setId } from "../store";
+import { setId, setSelectedResto } from "../store";
 
 function Boutiques() {
   const router = useRouter();
@@ -37,9 +37,7 @@ function Boutiques() {
     }
   };
 
-  const goto = () => {
-    router.push("/Page/addResto");
-  }
+
 
   // Fonction pour naviguer vers une autre page avec l'ID
   const navigateToOtherPage = (id: number) => {
@@ -59,8 +57,7 @@ function Boutiques() {
 
     // Store the JSON string in localStorage
     localStorage.setItem("resto", jsonString);
-
-    router.push("/Home/Boutiques");
+    router.push("/boutiques");
   };
 
   React.useEffect(() => {
@@ -79,6 +76,8 @@ function Boutiques() {
               className="box"
               onClick={() => {
                 localStorage.setItem("resto", JSON.stringify(items.resto));
+                setSelectedResto(items.id)
+                
                 navigateToOtherPage(items.resto.shopid);
               }}
               style={{ cursor: "pointer" }}
@@ -101,7 +100,6 @@ function Boutiques() {
           </div>
         ))}
       </div>
-      {isAdmin === true ? <Button onClick={goto}> add resto </Button> : null}
     </div>
 
   );
