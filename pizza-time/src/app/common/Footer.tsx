@@ -7,10 +7,9 @@ import FooterMobile from './FooterMobile';
 const Footer = () => {
     const Year = new Date().getFullYear();
     return (
-        <footer className="bg-gray-800 text-slate-200"> {/* Adding text-white class to make text white */}
-                {/* Adding text-white class to make text white */}
+        <footer className="bg-gray-800 text-white"> 
                 <FooterMobile/>
-            <section className="hidden md:flex justify-around items-center border-t border-slate-100 py-12 px-12">
+                <section className="hidden md:flex justify-around items-center border-t border-gray-100 py-12 px-12">
                 <div>
                     <h2 className="items-center">Téléchargez notre application</h2>
                     <Link href="https://play.google.com/store/apps/details?id=com.softavera.pizzatime&hl=ln">

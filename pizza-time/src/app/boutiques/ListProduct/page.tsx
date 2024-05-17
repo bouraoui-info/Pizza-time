@@ -55,7 +55,7 @@ const CompanyPage: React.FC = () => {
             <section className="mb-24">
                 <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4">
                     {products.map((product, key) => (
-                        <div key={key} className="flex flex-col items-center p-4 bg-white rounded shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                        <div key={key} className="flex flex-col items-center justify-center p-6 cursor-pointer overflow-hidden border rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
                             <img
                                 src={product.imageUrl.Default.urlDefault}
                                 alt={product.title}
