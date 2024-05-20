@@ -7,21 +7,20 @@ import ModalComponent from "../common/ModalComponent";
 type Props = {
   menu: Menu;
   number: number;
-  setNumber:Function
+  setNumber:Function,
+  isModalOpen:boolean,
+  setIsModalOpen:Function
 };
 
-const MenuModal = ({ menu,number ,setNumber }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [prepare, setPrepare] = useState("");
-console.log({menu});
+const MenuModal = ({isModalOpen,setIsModalOpen, menu,number ,setNumber }: Props) => {
 
-  const closeModal = () => setIsOpen(false);
-  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true);
 
   return (
     <React.Fragment>
       <MenuCard menu={menu} openModal={openModal} />
-      {isOpen && <ModalComponent setNumber={setNumber} number={number} isOpenModal={isOpen} setIsOpenModal={setIsOpen} closeModal={closeModal} title={menu.title} image={menu.image} menu={menu} user={undefined}/>}
+      {isModalOpen && <ModalComponent setNumber={setNumber} number={number} isOpenModal={isModalOpen} setIsOpenModal={setIsModalOpen} closeModal={closeModal} title={menu.title} menu={menu} image={menu.imageUrl.Default.urlDefault} user={undefined}/>}
     </React.Fragment>
   );
   

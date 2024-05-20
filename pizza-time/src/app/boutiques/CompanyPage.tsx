@@ -6,7 +6,6 @@ import Header from "@/app/common/Header";
 import SideBar from "@/app/common/SideBar";
 import Logobanner from "@/app/Home/LogoBanner";
 import Footer from "@/app/common/Footer";
-import { card } from "@/constats";
 import { store } from "../store";
 import { useRouter } from "next/navigation";
 

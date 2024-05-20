@@ -100,7 +100,7 @@ export class RestoController {
     let listproduct: any = [];
     items.forEach((el: any) => {
       let item = product.card.items[el]
-      listproduct.push({ ...item, idProduct: el })
+      listproduct.push({ ...item, idProduct: el ,quantity:1})
     })
     if (!product) {
       throw new Error('Product not found');

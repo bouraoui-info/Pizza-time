@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import Header from "@/app/common/Header";
 import { store } from "../../store";
+import ModalComponent from "@/app/common/ModalComponent";
+import MenuModal from "@/app/Home/MenuModal";
 
 interface Product {
     price: number;
@@ -20,6 +22,9 @@ const CompanyPage: React.FC = () => {
     const { selectedResto, selectedCat } = useSnapshot(store);
     const [products, setProducts] = useState<Product[]>([]);
     const [number, setNumber] = useState(0);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [menu, setMenu] = useState<any>({});
 
     const getProduct = async () => {
         try {
@@ -42,6 +47,13 @@ const CompanyPage: React.FC = () => {
         getProduct();
     }, [selectedResto, selectedCat]);
 
+    const handleAddToCart = (product: Product) => {
+        setMenu(product)
+        setSelectedProduct(product);
+        setIsOpenModal(true);
+    };
+
+
     return (
         <div>
             <Header number={number} />
@@ -63,13 +75,28 @@ const CompanyPage: React.FC = () => {
                             />
                             <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
                             <p className="text-gray-600 mb-2">{product.price ?? product.priceHT} €</p>
-                            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => handleAddToCart(product)}
+                            >
                                 Add to Cart
                             </button>
                         </div>
                     ))}
                 </div>
             </section>
+            {isOpenModal && (
+                // <ModalComponent
+                //     isOpenModal={isOpenModal}
+                //     setIsOpenModal={setIsOpenModal}
+                //     title={selectedProduct.title}
+                //     image={selectedProduct.imageUrl.Default.urlDefault}
+                //     menu={selectedProduct}
+                //     user={null} 
+                //     setNumber={setNumber}
+                //     number={number}
+                // />
+                <MenuModal  menu={menu} setNumber={setNumber} number={number} setIsModalOpen={setIsOpenModal}  isModalOpen={isOpenModal}/>
+            )}
         </div>
     );
 };

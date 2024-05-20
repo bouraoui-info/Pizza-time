@@ -19,7 +19,7 @@ type ModalProps = {
   closeModal: () => void;
   menu: Menu; // Assuming Menu is a custom type
   setIsOpenModal: Function;
-  image: any;
+   image: any;
   user: any;
   setNumber: Function;
   number: number
@@ -38,7 +38,7 @@ const customStyles = {
   },
 };
 
-const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, title, image, menu, user, setNumber, number }: ModalProps) => {
+const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, title,image, menu, user, setNumber, number }: ModalProps) => {
   const { panier } = useSnapshot(store);
   const { time } = useSnapshot(store);
   const [selectedTime, setSelectedTime] = useState<moment.Moment | null>(null); // State for selected time
@@ -124,8 +124,12 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, tit
                 </div>
               ) : null}
             </div>
-
-            <div className='mt-5' style={{ marginLeft: "20%" }}><Image src={image} width={160} height={100} alt="menu-img" /></div>
+            <img
+                                    src={image}
+                                    alt="Preview"
+                                    width={360} height={200}
+                                />
+            {/* <div className='mt-5' style={{ marginLeft: "20%" }}><Image src={image} width={160} height={100} alt="menu-img" /></div> */}
           </div>
           {menu && menu.prepType && (
             <Disclosure>
