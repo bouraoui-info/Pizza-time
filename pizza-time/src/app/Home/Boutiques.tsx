@@ -80,7 +80,7 @@ function Boutiques() {
               }}
               style={{ cursor: "pointer" }}
             >
-              <div className="img-box overflow-hidden rounded-lg">
+              <div className="img-box overflow-hidden rounded-lg cursor-pointer shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
                 <img src={items.resto.image} className="object-cover w-full h-48" alt="items.resto.image" />
               </div>
 
