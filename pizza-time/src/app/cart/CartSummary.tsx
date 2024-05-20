@@ -4,12 +4,13 @@ import CartList from "../cart/CartList";
 import { store } from "../store";
 import { useSnapshot } from "valtio";
 import { FaCartArrowDown } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 
 const CartSummary = () => {
   const { panier, time } = useSnapshot(store);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-
+  const router = useRouter();
   // Fonction pour calculer le nombre total d'articles
   const calculateTotalNumberOfArticles = (cartItems: any) => {
     let totalArticles = 0;
@@ -56,6 +57,7 @@ const CartSummary = () => {
 
       if (response.ok) {
         setPaymentSuccess(true);
+        router.push("/pay")
       } else {
         throw new Error("Erreur lors du paiement");
       }

@@ -11,38 +11,38 @@ import toast from "react-hot-toast";
 
 
 const SuccessPaymentComponent = () => {
-    const router = useRouter();
-    const searchParams = useSearchParams()
-    const payment_intent = searchParams.get("payment_intent ")
-    const editOrderOnPaymentId = searchParams.get("orderId") as string
+  const router = useRouter();
+  const searchParams = useSearchParams()
+  const payment_intent = searchParams.get("payment_intent ")
+  const editOrderOnPaymentId = searchParams.get("orderId") as string
 
-const [_, editPaidOrder] = useMutation<EditOrderOnPaymentMutation, EditOrderOnPaymentMutationVariables>(EditOrderOnPaymentDocument)
+  const [_, editPaidOrder] = useMutation<any, any>(editOrderOnPaymentId)
 
-const {resetCart } = usecartStore()
+  const { resetCart } = usecartStore()
 
-useEffect(() => {
+  useEffect(() => {
     const handleOrderPaid = async () => {
-        const res = await editPaidOrder({
-          editOrderOnPaymentId,
-          paymentToken: payment_intent,
-        });
-        if (res.data?.editOrderOnPayment) {
-          toast.success("Order updated Successfully", { duration: 800 });
-          resetCart();
-          router.push(`/user/orders`);
-        } else {
-          toast.error("An error occured", { duration: 800 });
-        }
-      };
-      const delay = 3000; 
-      const timerId = setTimeout(() => {
-        handleOrderPaid();
-      }, delay);
-  
-      // Cleanup the timer to avoid invoking the function multiple times
-      return () => clearTimeout(timerId);
- 
-}, [editOrderOnPaymentId, editPaidOrder, payment_intent, resetCart, router])
+      const res = await editPaidOrder({
+        editOrderOnPaymentId,
+        paymentToken: payment_intent,
+      });
+      if (res.data?.editOrderOnPayment) {
+        toast.success("Order updated Successfully", { duration: 800 });
+        resetCart();
+        router.push(`/user/orders`);
+      } else {
+        toast.error("An error occured", { duration: 800 });
+      }
+    };
+    const delay = 3000;
+    const timerId = setTimeout(() => {
+      handleOrderPaid();
+    }, delay);
+
+    // Cleanup the timer to avoid invoking the function multiple times
+    return () => clearTimeout(timerId);
+
+  }, [editOrderOnPaymentId, editPaidOrder, payment_intent, resetCart, router])
 
 
   return (
@@ -59,3 +59,7 @@ useEffect(() => {
 }
 
 export default SuccessPaymentComponent
+
+function useMutation<T, U>(EditOrderOnPaymentDocument: any): [any, any] {
+  throw new Error("Function not implemented.");
+}

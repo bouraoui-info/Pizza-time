@@ -9,7 +9,7 @@ const CartTopSection = () => {
       
       <div className="mb-8">
         <Link
-          href={"/boutiques/PizzaTimeGuyangourt"}
+          href={"/boutiques"}
           className="flex items-center justify-center bg-green-600 text-lg px-4 py-1 text-white border border-green-500 space-x-2 rounded-full hover:text-green-700 hover:bg-green-200"
         >
           <HiOutlineChevronLeft /> <span>Mon Panier</span>{" "}
