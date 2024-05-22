@@ -4,7 +4,7 @@ export interface panier{
     id?:string;
     cartItem?:CartItem[];
     etat?:string;
-    prix?:number;
+    prix?:string;
     time?:Date;
     userId:User; 
 }

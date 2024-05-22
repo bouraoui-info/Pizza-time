@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RegistrationPage from '../inscription/page';
-import { setIsDropdownOpen, store } from '../store';
+import { setIsDropdownOpen, setpanier, store } from '../store';
 import { useSnapshot } from 'valtio';
 import UserEditAccountModal from '../(user)/user/UserEditAccountModal';
 import UserDetails from '../(user)/user/UserDetails';
@@ -59,11 +59,19 @@ const handleLoginClick = async () => {
 
     // Envoyer la requête POST à l'URL /api/login
     const response = await fetch('http://localhost:3001/api/users', requestOptions);
+    
+
     const result = await response.json();
 let user=result.filter((el:any)=>el.email===email && el.password===password);
     // Traiter la réponse de la requête
     if (user.length!==0) {
       localStorage.setItem('user', JSON.stringify(user[0]));
+      const cammanderesult:any = await fetch(`http://localhost:3001/api/panier/commande/${user[0].id}`, requestOptions);
+      let cammande:any=await cammanderesult.json()
+      const panier:any=cammande[0]?.panier??[]
+      console.log({panier:cammande[0]});
+      
+      setpanier(panier)
       alert("Connexion réussie");
     } else {
       setError("Mauvaise combinaison d'email et de mot de passe");

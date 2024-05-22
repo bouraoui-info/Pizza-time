@@ -35,7 +35,7 @@ export class PanierController {
     async AddPanier(
         @Body('cartItem') cartItem: CartItem[],
         @Body('etat') etat: string,
-        @Body('prix') prix: number,
+        @Body('prix') prix: string,
         @Body('userId') userId: string,
         @Body('time') time: string,
     ) {
@@ -64,11 +64,15 @@ export class PanierController {
 
     @Get('commande/:id')
     async getCommande(
-        @Param('id') userId: User,
+        @Param('id') userId: string,
     ) {
         try {
-            const commande = await this.panierService.findAllPanier({ where: { userId: User, etat: 'payé' } });
-            return commande;
+             const commande:any = await this.panierService.findlistPanier();
+             let panier=commande.filter((el:any)=>Number(el.userId)===Number(userId));
+             
+            if(panier!==undefined)
+            return panier
+        else return []
         } catch (e) {
             return { message: 'Get commande error:', e };
         }

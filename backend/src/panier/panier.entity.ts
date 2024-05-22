@@ -12,7 +12,7 @@ export class Panier {
   @Column({default:"non payé"})
   etat:string;
   @Column()
-  prix: number;
+  prix: string;
   @Column()
   userId :string ;
   @Column()

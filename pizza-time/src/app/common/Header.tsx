@@ -1,5 +1,5 @@
 "use client"
-import { HiBars3, HiOutlineShoppingCart } from "react-icons/hi2";
+import { HiOutlineShoppingCart, HiBars3 } from "react-icons/hi2";
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { setIsDropdownOpen, store } from '../store';
@@ -7,15 +7,28 @@ import { useSnapshot } from 'valtio';
 import React from "react";
 import { UserLocationProvider } from "../hooks/useLocation";
 
+const useUser = () => {
+    const [user, setUser] = React.useState(null);
+
+    React.useEffect(() => {
+        // Mock login check, replace with actual logic
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            setUser(JSON.parse(loggedInUser));
+        }
+    }, []);
+
+    return { user };
+};
 
 const Header = ({ number }: any) => {
-    const { isDropdownOpen } = useSnapshot(store)
+    const { isDropdownOpen } = useSnapshot(store);
+    const { user } = useUser();
     const [totalArticles, setTotalArticles] = React.useState(() => {
         if (typeof localStorage !== 'undefined') {
             return localStorage.getItem("totalArticles");
         } else {
-            // Handle the case when localStorage is not available
-            return null; // Or provide a default value
+            return null; 
         }
     });
 
@@ -25,52 +38,42 @@ const Header = ({ number }: any) => {
 
     const DropDownMenuDynamic = dynamic(() => import('./DropDownMenu'), { ssr: false });
 
-
-    function setIsOpenModal(flase: any): void {
-        throw new Error('Function not implemented.');
-    }
-
     React.useEffect(() => {
         let totalArticle: any = localStorage.getItem("totalArticles");
-        setTotalArticles(totalArticle)
-    }, [number])
+        setTotalArticles(totalArticle);
+    }, [number]);
+
     return (
-        <header className="grid grid-cols-2 py-5 px-4 md:px-12 items-center sticky top-0 z-10 bg-white">
+        <header className="flex justify-between py-5 px-4 md:px-12 items-center sticky top-0 z-10 bg-white shadow-md">
             {/* Left Area */}
-            <div className="flex items-center gap-x-8">
-                <button>
-                    <div className="px-4 sm:px-6 lg:px-8 mt-2">
-                        <div className=" py-4">
-                            <h2 className="text-lg leading-6 my-4 font-medium text-gray-900">
-                                <UserLocationProvider />
-                            </h2>
-                        </div>
-                    </div>
-                </button>
+            <div className="flex items-center gap-x-4">
+                <div className="flex items-center px-4 sm:px-6 lg:px-8 mt-2">
+                    <h2 className="text-lg leading-6 font-medium text-gray-900">
+                        <UserLocationProvider />
+                    </h2>
+                </div>
             </div>
             {/* Right Area */}
-            <div className="hidden md:flex items-center justify-end space-x-4">
-                {!isDropdownOpen && <Link href="/cart" className="relative p-2 bg-slate-200 rounded-full text-gray-500 hover:bg-green-200 hover:text-green-600">
-                    <div className="pr-1">
-                        <HiOutlineShoppingCart size={28} />
-                        <span className="absolute top-0 right-1 font-bold text-green-600">{totalArticles !== null ? totalArticles : 0}</span>
+            <div className="flex items-center space-x-4">
+                <Link href="/cart" className="relative p-2 bg-slate-200 rounded-full text-gray-500 hover:bg-green-200 hover:text-green-600">
+                    <HiOutlineShoppingCart size={28} />
+                    <span className="absolute top-0 right-1 text-sm font-bold text-green-600 bg-white rounded-full w-5 h-5 flex items-center justify-center">{totalArticles !== null ? totalArticles : 0}</span>
+                </Link>
 
-                    </div>
-                </Link>}
-
-                <div className="flex items-center gap-x-8 relative">
-
-                    {!isDropdownOpen && <div className="cursor-pointer shrink-0" onClick={toggleDropdown}>
-                        <HiBars3 size={28} />
-                    </div>}
+                <div className="relative">
+                    {!isDropdownOpen && !user && (
+                        <div className="cursor-pointer shrink-0" onClick={toggleDropdown}>
+                            <HiBars3 size={28} className="text-gray-500 hover:text-green-600" />
+                        </div>
+                    )}
+                    {user && (
+                        <img src={user.image} alt="User Image" className="w-8 h-8 rounded-full cursor-pointer hover:text-green-600" onClick={toggleDropdown} />
+                    )}
                     {isDropdownOpen && <DropDownMenuDynamic />}
-
                 </div>
             </div>
         </header>
     );
 };
-
-
 
 export default Header;

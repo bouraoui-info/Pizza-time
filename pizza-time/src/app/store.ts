@@ -1,4 +1,4 @@
-import { proxy } from "valtio";
+import { proxy,subscribe  } from "valtio";
 import { devtools, persist } from 'zustand/middleware';
 import {create} from "zustand";
 import { CartType,CartAction } from "../types";
@@ -92,6 +92,9 @@ export const usecartStore = create<CartType & CartAction>()(
         )
     )
 );
+subscribe(store, () => {
+    localStorage.setItem("panier", JSON.stringify(store.panier));
+});
 
 
 

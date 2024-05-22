@@ -17,7 +17,9 @@ export class PanierService {
         const newPanier = this.panierRepository.create(panier);
         return this.panierRepository.save(newPanier);
     }
-
+    findlistPanier(): Promise<any> {
+        return this.panierRepository.find()
+    }
     findAllPanier(condition: any): Promise<Panier[]> {
         return this.panierRepository.find(condition);
     }
