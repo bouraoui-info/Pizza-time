@@ -49,4 +49,16 @@ export class UsersController {
     }
     return this.usersService.delete(id);
   }
+  @Post('checkout')
+  async handleCheckout(@Body() body: { user_id: string, paymentMethodNonce: string ,TotalAmount:number}) {
+    const TotalAmount=10;
+      try {
+          const { user_id, paymentMethodNonce } = body;
+          const result = await this.usersService.processCheckout(user_id, paymentMethodNonce);
+          return { result };
+      } catch (error) {
+          console.error('Error during checkout:', error);
+          return { error: error.message || 'Internal Server Error' };
+      }
+  }
 }

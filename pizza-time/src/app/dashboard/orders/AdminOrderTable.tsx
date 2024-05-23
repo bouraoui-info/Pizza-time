@@ -19,12 +19,7 @@ interface Panier {
 
 const AdminOrderTable = () => {
   const [panier, setPanier] = useState<Panier[]>([]);
-  const [pageVariables, setPageVariables] = useState([
-    {
-      first: 4,
-      after: null as null | string,
-    },
-  ]);
+  
 
   useEffect(() => {
     const fetchedPanier = async () => {

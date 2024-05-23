@@ -49,13 +49,12 @@ export class PanierController {
         return await this.panierService.createPanier(partialPanier);
     }
 
-    @Get()
+    @Get(':id')
     async getPanier(
-      
+        @Param('id') userId: User,
     ) {
         try {
-            const panier = await this.panierService.findAllPanier({ where: {  etat: 'non payé' } });
-            
+            const panier = await this.panierService.findAllPanier({ where: { id_user: userId, etat: 'non payé' } });
             return panier;
         } catch (e) {
             return { message: 'Get panier error:', e };
@@ -78,14 +77,14 @@ export class PanierController {
         }
     }
 
+
     @Delete(':id')
     async deletePanier(@Param('id') panier: Panier) {
         return this.panierService.deletePanier(panier);
     }
 
     @Put(':id')
-    async updatePanier(@Param('id') panier: Panier): Promise<UpdateResult> {
-        return this.panierService.updatePanier(panier);
-    }
+  async update(@Param('id') id: number, @Body('etat_Commande') etat_Commande: string) {
+      this.panierService.updateEtat(id, etat_Commande)
 }
-
+}

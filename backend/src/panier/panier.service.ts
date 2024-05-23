@@ -31,6 +31,7 @@ export class PanierService {
     updatePanier(panier: Panier): Promise<UpdateResult> {
         return this.panierRepository.update(panier, { etat: 'payé' });
     }
-
+    updateEtat(id: number, etat_Commande: string): Promise<UpdateResult> {
+        return this.panierRepository.update({id}, { etat: etat_Commande });
+    }
 }
-
