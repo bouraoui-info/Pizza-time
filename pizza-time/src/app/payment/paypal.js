@@ -1,5 +1,5 @@
-"use client"
 // pages/api/paypal.js
+"use client"
 import axios from 'axios';
 
 export default async function handler(req, res) {
