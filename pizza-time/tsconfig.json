@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "user.d.ts", "src/app/api/getproducts/routes.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "user.d.ts", "src/app/api/getproducts/routes.js", "src/app/payment/PaypalButton.js"],
   "exclude": ["node_modules"]
 }

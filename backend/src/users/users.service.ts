@@ -2,17 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { BraintreeProvider } from './braintreeprovider';
 
 @Injectable()
 export class UsersService {
+  private gateway: braintree.BraintreeGateway;
+
   [x: string]: any;
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
-    private readonly braintreeProvider: BraintreeProvider,
 
-  ) {}
+    private usersRepository: Repository<User>,
+
+  ) {   
+  }
 
   // get all users
   async findall(): Promise<User[]> {
@@ -45,33 +47,4 @@ export class UsersService {
   async delete(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
-  async processCheckout(user_id: string, paymentMethodNonce: string) {
-
-    try {
-      console.log("get",paymentMethodNonce)
-    const { gateway } = this.braintreeProvider;
-    // Use the gateway object to perform Braintree operations
-    const result = await gateway.transaction.sale({
-        amount: '10',
-        paymentMethodNonce: paymentMethodNonce,
-        options: {
-        submitForSettlement: true
-        }
-    });
-    console.log({result})
-    if (result.success) {
-        return { result: 'success' };
-    } else {
-    // Check for specific authentication error
-    if (result.transaction && result.transaction.processorResponseCode === '2000') {
-        throw new Error('Braintree authentication error: Invalid credentials or account not configured properly');
-    } else {
-        throw new Error('Error processing transaction');
-    }
-    }
-} catch (error) {
-    console.error('Error during checkout:', error);
-    throw new Error('Internal Server Error');
-}
-}
 }

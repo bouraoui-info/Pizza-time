@@ -1,15 +1,15 @@
-import React from 'react'
-import Cartes from './Cartes'
+"use client"
+// pages/index.js
+import React from 'react';
+import PayPalButton1 from './PaypalButton';
 
-const page = () => {
+const HomePage = () => {
   return (
     <div>
-<Cartes/>
-
-
-
+      <h1>PayPal Integration</h1>
+      <PayPalButton1/>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default HomePage;

@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { PanierModule } from './panier/panier.module';
 
 import {RestoModule } from './resto/resto.module';
+import { PaypalModule } from './paypal/paypal.module';
 
 
 
@@ -30,6 +31,7 @@ import {RestoModule } from './resto/resto.module';
     UsersModule,
     PanierModule,
     RestoModule, 
+    PaypalModule
 
   ],
 

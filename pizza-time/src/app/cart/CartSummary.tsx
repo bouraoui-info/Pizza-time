@@ -5,7 +5,6 @@ import { store } from "../store";
 import { useSnapshot } from "valtio";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import Cartes from "../payment/Cartes";
 
 
 const CartSummary = () => {
@@ -58,6 +57,7 @@ const CartSummary = () => {
 
       if (response.ok) {
         setPaymentSuccess(true);
+        localStorage.setItem("amount",totalPrice.toFixed(2))
         router.push("/payment")
       } else {
         throw new Error("Erreur lors du paiement");
