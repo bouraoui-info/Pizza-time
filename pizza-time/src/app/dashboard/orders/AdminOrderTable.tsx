@@ -23,10 +23,12 @@ const AdminOrderTable = () => {
 
   useEffect(() => {
     const fetchedPanier = async () => {
-        // let userId=JSON.parse(localStorage.getItem("user")??"")?.id
+         let userId=JSON.parse(localStorage.getItem("user")??"")?.id
 
       try {
-        const response = await fetch(`http://localhost:3001/api/panier`);
+        const response = await fetch(`http://localhost:3001/api/panier/commande/${userId}
+
+        `);
         const data = await response.json();
         setPanier(data);
       } catch (error) {

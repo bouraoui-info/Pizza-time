@@ -14,7 +14,7 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
   const changeOrderStatus = async (id: string, newStatus: string, successMessage: string) => {
     let userId=JSON.parse(localStorage.getItem("user")??"")?.id
     try {
-      const res = await fetch(`http://localhost:3001/api/panier`, {
+      const res = await fetch(`http://localhost:3001/api/panier/Addpanier`, {
         method: "Get",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -37,7 +37,7 @@ export const AdminFetchedOrders = ({ panier, onLoadMore }: AdminFetchedOrdersPro
   return (
     <>
       
-      {panier.map((panier) => (
+      {Array.isArray(panier)&& panier.map((panier) => (
           <tr className="bg-white whitespace-nowrap" >
             <td className="px-6 py-3">{panier.id} </td>
             <td className="px-6 py-3 ">{panier.etat}</td>
