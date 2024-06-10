@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 const CartSummary = () => {
   const { panier, time } = useSnapshot(store);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const router = useRouter();
+   const router = useRouter();
   // Fonction pour calculer le nombre total d'articles
   const calculateTotalNumberOfArticles = (cartItems: any) => {
     let totalArticles = 0;

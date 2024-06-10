@@ -1,11 +1,20 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Alert } from "react-bootstrap";
+import Image from "next/image";
 
 type Props = {
     user: any;
-    updateUserProfile: (formData: FormData) => void;
+    updateUserProfile: (user: any) => void;
     setIsOpen: Function;
     isOpen: boolean;
+};
+
+type UserData = {
+    user_id: number;
+    nom: string;
+    prenom: string;
+    tele: string;
+    email: string;
 };
 
 export default function UserEditAccountModal({
@@ -21,11 +30,18 @@ export default function UserEditAccountModal({
     const [address, setAddress] = useState(user.address || "");
     const [image, setImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState(user.image || "");
+    const [dataUser, setDataUser] = useState<UserData | null>(null);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const closeModal = () => setIsOpen(false);
 
-    const editUserProfile = (e: FormEvent<HTMLFormElement>) => {
+    const editUserProfile = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            console.error("No user ID found in local storage.");
+            return;
+        }
         const formData = new FormData();
         formData.set("name", name);
         formData.set("lastname", lastname);
@@ -35,7 +51,26 @@ export default function UserEditAccountModal({
         if (image) {
             formData.set("image", image);
         }
-        updateUserProfile(formData);
+
+        try {
+            const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                method: 'PUT',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok' + response.statusText);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            updateUserProfile(data.user);
+            setShowSuccess(true);
+            setTimeout(() => setShowSuccess(false), 3000); 
+            closeModal();
+        } catch (err) {
+            console.error('There was a problem with your fetch operation:', err);
+        }
     };
 
     useEffect(() => {
@@ -69,6 +104,7 @@ export default function UserEditAccountModal({
                     <Modal.Title>Account Info</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {showSuccess && <Alert variant="success">Profile updated successfully!</Alert>}
                     <Form onSubmit={editUserProfile}>
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
@@ -95,10 +131,12 @@ export default function UserEditAccountModal({
                                 onChange={onChange}
                             />
                             {imagePreview && (
-                                <img
+                                <Image
                                     src={imagePreview}
                                     alt="Preview"
-                                    style={{ maxWidth: "100px", marginTop: "10px" }}
+                                    width={100}
+                                    height={100}
+                                    objectFit="cover"
                                 />
                             )}
                         </Form.Group>

@@ -66,6 +66,9 @@ const AdminOrderTable = () => {
                 Paid
               </th>
               <th scope="col" className="px-6 py-3">
+                Cancel
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Collected
               </th>
               <th scope="col" className="px-6 py-3">

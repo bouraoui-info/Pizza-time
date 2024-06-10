@@ -4,30 +4,30 @@ import { ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Modal from 'react-modal';
 import { Disclosure } from "@headlessui/react";
 import { HiChevronDown } from "react-icons/hi2";
-import { TimePicker } from 'antd'; // Import TimePicker from Ant Design
-import moment from 'moment'; // Import moment for time manipulation
+import { TimePicker } from 'antd';
+import moment from 'moment';
 import { CartType, Menu } from "@/types";
 import { setTime, setpanier, store, usecartStore } from '../store';
 import { useSnapshot } from 'valtio';
 import moto from '../../../public/Objects/moto.png';
 import panierrepas from '../../../public/Objects/panierrepas.png';
 import { UserLocationProvider } from '../hooks/useLocation';
+import { useRouter } from 'next/navigation';
 
 type ModalProps = {
   isOpenModal: boolean;
   title: string;
   closeModal: () => void;
-  menu: Menu; // Assuming Menu is a custom type
+  menu: Menu;
   setIsOpenModal: Function;
-   image: any;
+  image: any;
   user: any;
   setNumber: Function;
-  number: number
+  number: number;
 }
 
 const customStyles = {
   content: {
-    // inset:" 56% auto auto 50% !important",
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -38,48 +38,51 @@ const customStyles = {
   },
 };
 
-const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, title,image, menu, user, setNumber, number }: ModalProps) => {
+const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, title, image, menu, user, setNumber, number }) => {
   const { panier } = useSnapshot(store);
   const { time } = useSnapshot(store);
-  const [selectedTime, setSelectedTime] = useState<moment.Moment | null>(null); // State for selected time
+  const [selectedTime, setSelectedTime] = useState<moment.Moment | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const MenuToAdd = ""
+  const MenuToAdd = "";
   const closeModal = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
   const [cartCount, setCartCount] = useState(0);
   const [showlocation, setShowlocation] = useState(false);
   const [saleMode, setSaleMode] = useState("");
+  const router = useRouter();
+
   const calculateTotalNumberOfArticles = (cartItems: any) => {
     let totalArticles = 0;
-
-    // Itérer sur chaque article dans le panier et ajouter ses quantités au total
     cartItems.forEach((item: any) => {
       totalArticles += item.quantity;
-
     });
     localStorage.setItem("totalArticles", JSON.stringify(totalArticles));
-    setNumber(totalArticles)
+    setNumber(totalArticles);
   };
+
   const PutItemsIntoCart = (MenuToAdd: any) => {
     if (saleMode === "") {
       alert("Veuillez choisir un mode de vente");
       return;
-    }
-    else if (!selectedTime) {
+    } else if (!selectedTime) {
       alert("Veuillez choisir un temps");
       return;
+    } else {
+      setIsOpenModal(false);
+
+      let newpanier: any = [...JSON.parse(JSON.stringify(panier))];
+
+      newpanier.push({ ...MenuToAdd, saleMode: saleMode });
+      calculateTotalNumberOfArticles(newpanier);
+      setpanier(newpanier);
+      setTime(selectedTime.format("HH:mm"));
+
+      // Redirect to checkout page if sale mode is "Emporter"
+      if (saleMode === "Emporter") {
+        router.push('/checkout');
+      }
     }
-    else; setIsOpenModal(false);
-
-
-    let newpanier: any = [...JSON.parse(JSON.stringify(panier))];
-
-    newpanier.push({ ...MenuToAdd, saleMode: saleMode });
-    calculateTotalNumberOfArticles(newpanier)
-    setpanier(newpanier)
-    setTime(selectedTime.format("HH:mm"))
-  }
-
+  };
 
   return (
     <div>
@@ -115,8 +118,6 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, tit
             <div style={{ marginLeft: "20%" }}>
               <p className="text-lg font-semibold ml-5 pl-5 mt-2">Aujourd'hui</p>
             </div>
-
-            {/* Affichage de la barre de localisation */}
             <div className='mb-5'>
               {showlocation ? (
                 <div style={{ position: "fixed", right: "10%" }}>
@@ -125,11 +126,10 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, tit
               ) : null}
             </div>
             <img
-                                    src={image}
-                                    alt="Preview"
-                                    width={360} height={200}
-                                />
-            {/* <div className='mt-5' style={{ marginLeft: "20%" }}><Image src={image} width={160} height={100} alt="menu-img" /></div> */}
+              src={image}
+              alt="Preview"
+              width={360} height={200}
+            />
           </div>
           {menu && menu.prepType && (
             <Disclosure>
@@ -151,14 +151,12 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, tit
               </Disclosure.Panel>
             </Disclosure>
           )}
-          {/* TimePicker component */}
           <div className="mt-4">
             <p className="text-center mb-3">Selectionner le Temps </p>
             <TimePicker
-              // defaultValue={selectedTime} // Set default value
-              onChange={(time: any) => setSelectedTime(time)} // Handle time change
-              format="HH:mm" // Set format
-              minuteStep={15} // Set minute step
+              onChange={(time: any) => setSelectedTime(time)}
+              format="HH:mm"
+              minuteStep={15}
               className={`w-full mt-4 ${!selectedTime ? "border border-red-500" : ""}`}
             />
           </div>
@@ -175,11 +173,10 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpenModal, setIsOpenModal, tit
           <button
             className="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
             onClick={() => {
-              PutItemsIntoCart(menu)
+              PutItemsIntoCart(menu);
             }}
           >
-            Add to Cart :$ {menu && menu.price}
-
+            Add to Cart: ${menu && menu.price}
           </button>
         </ModalFooter>
       </Modal>
