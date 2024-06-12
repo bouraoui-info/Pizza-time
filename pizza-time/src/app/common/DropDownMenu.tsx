@@ -8,9 +8,11 @@ import Link from 'next/link';
 import { FiChevronLeft } from 'react-icons/fi';
 import { CgMail } from 'react-icons/cg';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import { useRouter } from 'next/navigation';
 
 
 function DropDownMenu() {
+  const router=useRouter()
   const [error, setError] = useState('');
   const { isDropdownOpen } = useSnapshot(store);
   const [showRegistration, setShowRegistration] = useState(false);
@@ -73,6 +75,10 @@ let user=result.filter((el:any)=>el.email===email && el.password===password);
       
       setpanier(panier)
       alert("Connexion réussie");
+      console.log(user[0])
+      if (user[0]?.role === "admin") {
+        router.push("/dashboard");
+      }
     } else {
       setError("Mauvaise combinaison d'email et de mot de passe");
     }

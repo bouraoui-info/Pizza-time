@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.9",
     "@headlessui/react": "^1.7.18",
+    "@mui/material": "^5.15.20",
     "@nextui-org/modal": "^2.0.33",
     "@paypal/react-paypal-js": "^8.3.0",
     "@react-google-maps/api": "^2.19.3",
@@ -37,6 +38,7 @@
     "react-icons": "^5.0.1",
     "react-modal": "^3.16.1",
     "react-paypal-button-v2": "^2.6.3",
+    "react-toastify": "^10.0.5",
     "reactstrap": "^9.2.2",
     "recharts": "^2.12.6",
     "stripe": "^15.7.0",

@@ -10,8 +10,16 @@ type StoreType = {
     id: number; 
     selectedResto:number;
     selectedCat:number;
+    user:UserType | null; 
 
 };
+type UserType ={
+
+role: string 
+
+
+
+}; 
 
 export const store = proxy<StoreType>({
     
@@ -21,7 +29,8 @@ export const store = proxy<StoreType>({
     panier:[],
     id:0,
     selectedResto:0,
-    selectedCat:0
+    selectedCat:0,
+    user:null
 
 });
 export function setId(id: number): void {
@@ -53,6 +62,12 @@ export function setSelectedCat(
     selectedCat:any
 ): void {
     store.selectedCat = selectedCat;
+}
+
+export function setUser(
+    user:UserType
+): void {
+    store.user = user;
 }
 export const usecartStore = create<CartType & CartAction>()(
     devtools(

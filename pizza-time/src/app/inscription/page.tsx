@@ -6,6 +6,9 @@ import { TbUserSquareRounded } from 'react-icons/tb';
 import { GiSmartphone } from 'react-icons/gi';
 import { MdOutlineAttachEmail } from 'react-icons/md';
 import { FiChevronLeft } from 'react-icons/fi';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 function RegistrationPage({ setShowRegistration }: any) {
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
@@ -20,29 +23,75 @@ function RegistrationPage({ setShowRegistration }: any) {
 
     // Add validation here to check if passwords match and meet requirements
     if (password !== confirmPassword) {
-      console.error('Passwords do not match');
+      toast.error("Les mots de passe ne correspondent pas", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
       return;
     }
 
-    // Send the registration data to your backend API
-    const response = await fetch('http://localhost:3001/api/users ', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name, lastname, phone, address, password }),
-    });
+    try {
+      const response = await fetch("http://localhost:3001/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          name,
+          lastname,
+          phone,
+          address,
+          password,
+          role: "user",
+          image: "/https://cdn-icons-png.freepik.com/256/10/10522.png?semt=ais_hybrid",
+        }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
-      // Handle successful registration, e.g., redirect to login page
-      console.log('Registration successful');
-    } else {
-      // Handle registration errors
-      console.error('Registration failed:', data.error);
+      if (response.ok) {
+        toast.success("Inscription réussie!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+        console.log("Registration successful");
+      } else {
+        toast.error(`Erreur: ${data.error}`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+        console.error("Registration failed:", data.error);
+      }
+    } catch (error) {
+      toast.error("Erreur de réseau", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      console.error("Network error:", error);
     }
   };
 
   return (
+    <React.Fragment>      <ToastContainer /> 
     <div className="registration-page bg-gray-100 ">
       <div className='d-flex flex-row mb-5'> <div style={{ top: "11px", position: "relative" }} onClick={() => setShowRegistration(false)} ><FiChevronLeft size={32} /></div>
         <h1 className='ml-5 pl-5'>Inscription</h1>
@@ -139,6 +188,8 @@ function RegistrationPage({ setShowRegistration }: any) {
       </Link>
 
     </div>
+    </React.Fragment>
+
   );
 
 }

@@ -3,7 +3,6 @@ import React from 'react';
 import { useSnapshot } from 'valtio';
 import { store, setpanier } from '../store';
 import { useRouter } from 'next/navigation';
-import next from 'next';
 const CheckoutPage: React.FC = () => {
     const { panier } = useSnapshot(store);
     const router = useRouter();

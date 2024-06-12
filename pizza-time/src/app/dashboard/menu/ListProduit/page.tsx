@@ -11,6 +11,10 @@ export default function ListProduit() {
 
 
     const handleDelete = async (idProduct: string) => {
+        const confirmeDelete = window.confirm("Are you sure , you want to delete this product ?")
+        if (!confirmeDelete){
+            return; 
+        }
         try {
             console.log('Deleting product...',idProduct);
             console.log('Selected Resto:', selectedResto);

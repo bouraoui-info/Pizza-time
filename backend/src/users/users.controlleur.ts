@@ -34,8 +34,9 @@ export class UsersController {
 
   //update user
   @Put(':id')
-  async update(@Param('id') id: number, @Body() user: User): Promise<User> {
-    return this.usersService.update(id, user);
+  async update(@Param('id') id: number, @Body() user:any): Promise<User> {
+    console.log({user});
+   return this.usersService.update(id, user);
   }
 
   //delete user

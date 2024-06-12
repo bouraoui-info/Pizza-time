@@ -30,32 +30,28 @@ export default function UserEditAccountModal({
     const [address, setAddress] = useState(user.address || "");
     const [image, setImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState(user.image || "");
-    const [dataUser, setDataUser] = useState<UserData | null>(null);
+    const [role, setRole] = useState<string>("");
     const [showSuccess, setShowSuccess] = useState(false);
 
     const closeModal = () => setIsOpen(false);
 
     const editUserProfile = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const userId = localStorage.getItem("userId");
-        if (!userId) {
+        const userStore = localStorage.getItem("user");
+        const userId = userStore ? (JSON.parse(userStore)).id : null;
+               
+        
+        if (userId===null) {
             console.error("No user ID found in local storage.");
             return;
         }
-        const formData = new FormData();
-        formData.set("name", name);
-        formData.set("lastname", lastname);
-        formData.set("email", email);
-        formData.set("phone", phone);
-        formData.set("address", address);
-        if (image) {
-            formData.set("image", image);
-        }
-
+        
+let user:any={name,lastname,email,phone,address,role,image}
         try {
             const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
                 method: 'PUT',
-                body: formData,
+                body:JSON.stringify(user),
+                headers: { 'Content-Type': 'application/json' },
             });
 
             if (!response.ok) {
@@ -80,6 +76,8 @@ export default function UserEditAccountModal({
             setLastname(user.lastname);
             setPhone(user.phone);
             setAddress(user.address);
+            setRole(user.role)
+            setImage(user.image)
         }
     }, [user]);
 
@@ -105,7 +103,7 @@ export default function UserEditAccountModal({
                 </Modal.Header>
                 <Modal.Body>
                     {showSuccess && <Alert variant="success">Profile updated successfully!</Alert>}
-                    <Form onSubmit={editUserProfile}>
+                    <Form >
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
@@ -161,7 +159,7 @@ export default function UserEditAccountModal({
                         <Button variant="secondary" onClick={closeModal}>
                             Close
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" onClick={(e:any)=>editUserProfile(e)}>
                             Save changes
                         </Button>
                     </Form>

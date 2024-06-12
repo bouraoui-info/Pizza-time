@@ -18,4 +18,6 @@ export class User {
     image: string;
     @Column()
     password: string;
+    @Column()
+    role: string;
 }
